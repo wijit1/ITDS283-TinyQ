@@ -17,3 +17,59 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/addpost_page_addimage.png
+    - assets/addpost_page_copy.png
+    - assets/addpost_page_happy.png
+    - assets/addpost_page_send.png
+    - assets/app_icon.png
+    - assets/detail_page_play_down.png
+    - assets/detail_page_play_up.png
+    - assets/home_page_bookmark_icon.png
+    - assets/home_page_chat_icon.png
+    - assets/home_page_heart_icon.png
+    - assets/home_page_up_arrow.png
+    - assets/lock_icon.png
+    - assets/login_book.png
+    - assets/mail_icon.png
+    - assets/nav_addpost.png
+    - assets/nav_home.png
+    - assets/nav_openbook.png
+    - assets/nav_profile.png
+    - assets/nav_search.png
+    - assets/new_page_megaphone.png
+    - assets/notification_bell.png
+    - assets/profile_page_blog_active.png
+    - assets/profile_page_bookmark_active.png
+    - assets/profile_page_bookmark_white.png
+    - assets/profile_page_heart.png
+    - assets/proflie_page_blog_active.png
+    - assets/proflie_page_heart_active.png
+    - assets/search_page_Com_Sci.png
+    - assets/search_page_Math.png
+    - assets/search_page_ML.png
+    - assets/search_page_Sc.png
+    - assets/sign_up_human.png
+    - assets/sign_up_id_card.png
+
+  fonts:
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-Regular.ttf
+          weight: 700
+  fonts:
+    - family: Crimson
+      fobts:
+      - asset: fonts/CrimsonText-Regular.ttf
+        weight: 400
+      - asset: fonts/CrimsonText-Bold.ttf
+        weight: 700
+      - asset: fonts/CrimsonText-SemiBold.ttf
+        weight: 600
+      - asset: fonts/CrimsonText-BoldItalic.ttf
+        weight: 700
+      - asset: fonts/CrimsonText-SemiBold.ttf
+        weight: 600
+      - asset: fonts/CrimsonText-Italic.ttf
+        weight: 400
