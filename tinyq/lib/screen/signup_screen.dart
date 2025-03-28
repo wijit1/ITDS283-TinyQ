@@ -8,6 +8,18 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final email = TextEditingController();
+  FocusNode email_F = FocusNode();
+  final password = TextEditingController();
+  FocusNode password_F = FocusNode();
+  final passwordConfirme = TextEditingController();
+  FocusNode passwordConfirme_F = FocusNode();
+  final username = TextEditingController();
+  FocusNode username_F = FocusNode();
+
+  final bio = TextEditingController();
+  FocusNode bio_F = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
             child: InkWell(
               onTap: null,
               child: CircleAvatar(
-                radius: 45,
+                radius: 43,
                 backgroundColor: const Color.fromARGB(255, 243, 243, 243),
                 child: ClipOval(
                   child: Image.asset(
@@ -35,6 +47,13 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
+          Textfield(username, AssetImage("assets/images/mail_icon.png"), "Username", username_F),
+          Textfield(email, AssetImage("assets/images/mail_icon.png"), "Email", email_F),
+          Textfield(bio, AssetImage("assets/images/mail_icon.png"), "Bio", bio_F),
+          Textfield(password, AssetImage("assets/images/mail_icon.png"), "Password", password_F),
+          Textfield(passwordConfirme, AssetImage("assets/images/mail_icon.png"), "Password Confirm", passwordConfirme_F),
+          Signup_Button(),
+          Have(),
         ],
       )),
     );
@@ -46,11 +65,11 @@ Container Head() {
     color: Color(0xFF225AEB),
     child: SizedBox(
       width: double.infinity,
-      height: 290,
+      height: 280,
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 30, top: 50),
+            padding: EdgeInsets.only(left: 30, top: 35),
             child: Container(
               alignment: Alignment.topLeft,
               child: Text(
@@ -85,7 +104,8 @@ Container Head() {
                     "assets/images/sign_up_id_card.png",
                   )),
             ),
-          )
+          ),
+          
         ],
       ),
     ),
@@ -94,13 +114,13 @@ Container Head() {
 
 Padding Have() {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text("Already have an account ?",
             style: TextStyle(
-            fontSize: 15,
+            fontSize: 16,
             color: Colors.grey,
           ),),
             SizedBox(width: 15,),
@@ -110,7 +130,7 @@ Padding Have() {
                 padding: EdgeInsets.all(8.0),
                 child: Text("Login",
                 style: TextStyle(
-                fontSize: 16,
+                fontSize: 18,
                 color: const Color.fromARGB(255, 23, 99, 240),
                 fontWeight: FontWeight.bold
                             ),),
@@ -125,18 +145,18 @@ Padding Have() {
 
   Padding Signup_Button() {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.only(top: 10,bottom: 0),
           child: InkWell(
             onTap: null,
             child: Container(
               alignment: Alignment.center,
-              width: 265,
+              width: 200,
               height: 60,
               decoration: BoxDecoration(
                 color: Color(0xFF225AEB),
                 borderRadius: BorderRadius.circular(20)
               ),
-              child: Text("Signup in",
+              child: Text("Sign up ",
               style: TextStyle(
                 fontSize: 25,
                 color: Colors.white,
@@ -151,8 +171,9 @@ Padding Have() {
 
   Padding Textfield(TextEditingController controller, AssetImage icon, String type,FocusNode focusNode) {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25,vertical: 15),
+          padding: EdgeInsets.symmetric(horizontal: 25,vertical: 5),
           child: Container(
+            width: 320,
             height: 55,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(20)),
@@ -162,7 +183,8 @@ Padding Have() {
               focusNode: focusNode,
               decoration: InputDecoration(
                   hintText: type,
-                  hintStyle: TextStyle(color:  Color.fromARGB(255, 145, 144, 144)),
+                  hintStyle: TextStyle(color:  Color.fromARGB(255, 187, 186, 186),
+                  fontSize: 15),
                   prefixIcon: Image(
                     width: 70,
                     image: icon),
