@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tinyq/screen/login_screen.dart';
+import 'package:tinyq/screen/signup_screen.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
@@ -43,7 +45,9 @@ class GetStartedScreen extends StatelessWidget {
                         )
                       ) ,
                       onPressed: (){
-                        
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context)=>SignupScreen()));
                       }, 
                       child: Container(
                         child: Text("Get Start",
@@ -64,7 +68,9 @@ class GetStartedScreen extends StatelessWidget {
                         )
                       ) ,
                       onPressed: (){
-                    
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context)=> LoginScreen()));
                       }, 
                       child: Container(
                         child: Text("Log in",

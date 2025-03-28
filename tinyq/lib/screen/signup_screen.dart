@@ -23,11 +23,11 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       body: Container(
           child: Column(
         children: [
-          Head(),
+          Head(context),
           SizedBox(
             height: 10,
           ),
@@ -60,7 +60,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 }
 
-Container Head() {
+Container Head(context) {
   return Container(
     color: Color(0xFF225AEB),
     child: SizedBox(
@@ -69,7 +69,25 @@ Container Head() {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 30, top: 35),
+            padding:  EdgeInsets.only(top: 30,bottom: 7),
+            child: Container(
+              height: 10,
+              alignment: Alignment.topLeft,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent, // ทำให้เงาหายไป
+                  shape: CircleBorder(), // รูปทรงปุ่มเป็นวงกลม
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                }, 
+                child: Icon(Icons.arrow_back,size: 24,)),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 30,),
             child: Container(
               alignment: Alignment.topLeft,
               child: Text(
@@ -89,7 +107,7 @@ Container Head() {
                 "Your Account",
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 50,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold),
               ),
             ),
