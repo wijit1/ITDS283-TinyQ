@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "356556379247",
+    "project_id": "tinyq-fbf70",
+    "storage_bucket": "tinyq-fbf70.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356556379247:android:dafb0c26c4cc360199699a",
+        "android_client_info": {
+          "package_name": "com.example.tinyq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC46opviW3lFEYAanHyuDfZfNkFI9M03c4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
