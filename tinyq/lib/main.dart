@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tinyq/auth/mainpage.dart';
 import 'package:tinyq/firebase_options.dart';
 
 import 'package:tinyq/screen/get_started_screen.dart';
@@ -27,7 +28,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: GetStartedScreen()
+        home: Mainpage()
     );
   }
 }
