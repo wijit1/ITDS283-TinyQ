@@ -11,11 +11,11 @@ class Mainpage extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(), 
-        builder: (context,snapshot){
+        builder: (context , snapshot){
           if(snapshot.hasData){
-            return const HomeScreen();
+            return HomeScreen();
           }else{
-            return const GetStartedScreen();
+            return GetStartedScreen();
           }
         })
     );

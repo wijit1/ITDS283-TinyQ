@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinyq/data/firebase_service/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -76,7 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: InkWell(
-            onTap: null,
+            onTap: () {
+              Authentication().Login(email: email.text , password: password.text);
+            },
             child: Container(
               alignment: Alignment.center,
               width: 265,

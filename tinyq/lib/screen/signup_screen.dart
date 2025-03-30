@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tinyq/data/firebase_service/firebase_auth.dart';
+import 'package:tinyq/screen/home.dart';
 import 'package:tinyq/util/dialog.dart';
 import 'package:tinyq/util/exception.dart';
 import 'package:tinyq/util/imagepicker.dart';
@@ -102,6 +103,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 username: username.text,
                 major: major.text,
                 profile: _imageFile ?? File(''));
+              Navigator.pushReplacement(
+              context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
           } on exceptions catch (e) {
             dialogBuilder(context, e.message);
           }

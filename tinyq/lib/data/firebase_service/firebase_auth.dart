@@ -8,6 +8,21 @@ import 'package:tinyq/util/exception.dart';
 
 class Authentication{
   FirebaseAuth _auth = FirebaseAuth.instance; 
+
+  Future<void> Login({
+    required String email,
+    required String password,}) async {
+    
+    try{
+      await _auth.signInWithEmailAndPassword(
+        email: email.trim(), 
+        password: password.trim());
+    }on FirebaseAuthException catch(e){
+      throw exceptions(e.message.toString());
+    }
+  }
+
+
   Future<void> Signup({
     required String email,
     required String password,
