@@ -17,14 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: ()=> _signOut(context), 
-            icon: Icon(Icons.logout),)
-        ],
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Text("Home Screen"),
       ),
-      body: Text("Home"),
     );
   }
 }

@@ -77,8 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: InkWell(
-            onTap: () {
-              Authentication().Login(email: email.text , password: password.text);
+            onTap: () async {
+              await Authentication().Login(email: email.text , password: password.text);
+              Navigator.pop(context);
             },
             child: Container(
               alignment: Alignment.center,
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Text("Log in",
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 25, 
                 color: Colors.white,
                 fontWeight: FontWeight.bold
               ),),
