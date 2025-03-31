@@ -36,6 +36,7 @@ flutter:
     - assets/images/lock_icon.png
     - assets/images/major_icon.png
     - assets/images/user_icon.png
+    - assets/images/app_icon.png
   
   fonts:
     - family: Pacifico

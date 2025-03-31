@@ -104,10 +104,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 username: username.text,
                 major: major.text,
                 profile: _imageFile ?? File(''));
-              Navigator.pushReplacement(
-              context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+
+            Navigator.pop(context);
+
           } on exceptions catch (e) {
             dialogBuilder(context, e.message);
           }
