@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyq/data/firebase_service/firebase_auth.dart';
+import 'package:tinyq/screen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Textfield(email, AssetImage("assets/images/mail_icon.png"), "Email", email_F),
-          Textfield(password, AssetImage("assets/images/locked.png"), "Password", password_F),
+          Textfield(password, AssetImage("assets/images/lock_icon.png"), "Password", password_F),
           Login_Button(),
           Have()
         ],
@@ -57,7 +58,12 @@ class _LoginScreenState extends State<LoginScreen> {
           ),),
             SizedBox(width: 15,),
             GestureDetector(
-              onTap: null,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignupScreen()),
+              );
+            },
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text("Sign up",

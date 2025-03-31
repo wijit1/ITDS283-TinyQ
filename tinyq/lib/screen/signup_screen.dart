@@ -6,6 +6,7 @@ import 'package:tinyq/screen/home.dart';
 import 'package:tinyq/util/dialog.dart';
 import 'package:tinyq/util/exception.dart';
 import 'package:tinyq/util/imagepicker.dart';
+import 'package:tinyq/screen/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -73,15 +74,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
             ),
           ),
-          Textfield(username, AssetImage("assets/images/mail_icon.png"),
+          Textfield(username, AssetImage("assets/images/user_icon.png"),
               "Username", username_F),
           Textfield(email, AssetImage("assets/images/mail_icon.png"), "Email",
               email_F),
-          Textfield(major, AssetImage("assets/images/mail_icon.png"), "Major",
+          Textfield(major, AssetImage("assets/images/major_icon.png"), "Major",
               major_F),
-          Textfield(password, AssetImage("assets/images/mail_icon.png"),
+          Textfield(password, AssetImage("assets/images/lock_icon.png"),
               "Password", password_F),
-          Textfield(passwordConfirme, AssetImage("assets/images/mail_icon.png"),
+          Textfield(passwordConfirme, AssetImage("assets/images/lock_icon.png"),
               "Password Confirm", passwordConfirme_F),
           Signup_Button(),
           Have(),
@@ -219,7 +220,12 @@ class _SignupScreenState extends State<SignupScreen> {
             width: 15,
           ),
           GestureDetector(
-            onTap: null,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            },
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

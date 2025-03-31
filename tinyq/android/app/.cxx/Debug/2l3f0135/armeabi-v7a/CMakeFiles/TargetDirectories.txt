@@ -1,0 +1,2 @@
+C:/GitHub/ITDS283-TinyQ/tinyq/android/app/.cxx/Debug/2l3f0135/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/GitHub/ITDS283-TinyQ/tinyq/android/app/.cxx/Debug/2l3f0135/armeabi-v7a/CMakeFiles/rebuild_cache.dir
