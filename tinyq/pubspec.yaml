@@ -32,11 +32,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/locked.png
-    - assets/images/lock_icon.png
-    - assets/images/major_icon.png
-    - assets/images/user_icon.png
-    - assets/images/app_icon.png
+    - assets/images/
   
   fonts:
     - family: Pacifico
