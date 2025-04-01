@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinyq/screen/add_post.dart';
 import 'package:tinyq/screen/home.dart';
 import 'package:tinyq/screen/news_screen.dart';
+import 'package:tinyq/screen/notification_screen.dart';
 import 'package:tinyq/screen/profile_screen.dart';
 import 'package:tinyq/screen/search_screen.dart';
 
@@ -55,8 +56,29 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text("TinyQ?",
+        style: TextStyle(
+          color: Colors.white,
+          fontFamily: "Pacifico",
+          fontSize: 25,
+          fontWeight: FontWeight.w200
+        )),
         backgroundColor: Color(0xFF225AEB),
         actions: [
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
+            },
+            child: ImageIcon(
+              AssetImage('assets/images/notification_bell.png',),
+              color: Colors.amberAccent,
+              size: 28,
+            ),
+          ),
+          SizedBox(width: 10),
           IconButton(
             onPressed: ()=> _signOut(context), 
             icon: Icon(
@@ -108,7 +130,7 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
           SearchScreen(),
           AddPost_Screen(),
           NewsScreen(),
-          ProfileScreen()
+          ProfileScreen(),
         ],
       ),
     );
