@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tinyq/data/model/user_profile.dart';
+import 'package:tinyq/widgets/postwidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,7 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                ))
+                )),
+              
+              Padding(
+                padding:  EdgeInsets.all(20.0),
+                child: Postwidget(),
+              ),
           ],
         ));
   }
