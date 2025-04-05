@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tinyq/data/firebase_service/firestor.dart';
+import 'package:tinyq/data/model/user_model.dart';
+import 'package:tinyq/util/image_cached.dart';
 
 class AddPost_Screen extends StatefulWidget {
   const AddPost_Screen({super.key});
@@ -25,59 +28,66 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
             height: 20,
           ),
           Add_Title(),
-          Padding(
-            padding: EdgeInsets.all(25.0),
-            child: Container(
-              height: 238,
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                    color: Color(0xFFD9D9D9), width: 2),
-              ),
-              child: Column(
-                children: [
-                  TextField(
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Description",
-                      hintStyle: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 13),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: null, 
-                          icon: Icon(Icons.image)),
-                        SizedBox(width: 15,),
-                        IconButton(
-                          onPressed: null, 
-                          icon: Icon(Icons.copy)),
-                        SizedBox(width: 15,),
-                        IconButton(
-                          onPressed: null, 
-                          icon: Icon(Icons.emoji_emotions)),
-                        SizedBox(width: 15,),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
+          Add_Detail()
         ],
       ),
     );
+  }
+
+  Padding Add_Detail() {
+    return Padding(
+          padding: EdgeInsets.all(25.0),
+          child: Container(
+            height: 245,
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                  color: Color(0xFFD9D9D9), width: 2),
+            ),
+            child: Column(
+              children: [
+                TextField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Description",
+                    hintStyle: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 13),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: null, 
+                        icon: Icon(Icons.image)),
+                      SizedBox(width: 15,),
+                      IconButton(
+                        onPressed: null, 
+                        icon: Icon(Icons.copy)),
+                      SizedBox(width: 15,),
+                      IconButton(
+                        onPressed: null, 
+                        icon: Icon(Icons.emoji_emotions)),
+                      SizedBox(width: 100,),
+                      IconButton(
+                        onPressed: null, 
+                        icon: Image(image: AssetImage('assets/images/addpost_page_send.png'))),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
   }
 
   Padding Add_Title() {
@@ -94,9 +104,14 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('assets/images/Mr.A.jpg'),
+            FutureBuilder(
+              future: Firebase_Firestor().getUser(),
+              builder: (context, snapshot) {
+                if(!snapshot.hasData){
+                    return Center(child: CircularProgressIndicator(),);
+                }
+                return Profile_user(snapshot.data!);
+              },
             ),
             SizedBox(width: 10),
             Expanded(
@@ -129,6 +144,16 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget Profile_user(Usermodel user) {
+    return ClipOval(
+      child: SizedBox(
+        width: 75,
+        height: 75,
+        child: CachedImage(user.profile),
       ),
     );
   }
