@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tinyq/util/image_cached.dart';
+import 'package:date_format/date_format.dart';
 
 class Postwidget extends StatefulWidget {
-  const Postwidget({super.key});
+  final snapshot;
+  const Postwidget(this.snapshot, {super.key});
 
   @override
   State<Postwidget> createState() => _PostwidgetState();
@@ -11,20 +14,20 @@ class _PostwidgetState extends State<Postwidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color.fromARGB(255, 219, 225, 240), width: 2)),
+          border:
+              Border.all(color: Color.fromARGB(255, 219, 225, 240), width: 2)),
       child: Column(
         children: [
           Column(
             children: [
-              Head(), // User Profile,
+              Head(widget.snapshot), // User Profile,
               SizedBox(
                 height: 6,
               ),
-              Title(), // Title and Detail
+              Title(widget.snapshot), // Title and Detail
               SizedBox(
                 height: 9,
               ),
@@ -51,38 +54,51 @@ class _PostwidgetState extends State<Postwidget> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 30, height: 30, 
+                  width: 30,
+                  height: 30,
                   child: Icon(Icons.chat_bubble_outline, color: Colors.grey),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("10"),
               ],
             ),
           ),
-          SizedBox(width: 25,),
+          SizedBox(
+            width: 25,
+          ),
           GestureDetector(
             onTap: () {},
             child: Row(
               children: [
                 SizedBox(
-                  width: 30, height: 30, 
+                  width: 30,
+                  height: 30,
                   child: Icon(Icons.favorite_border, color: Colors.grey),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("10"),
               ],
             ),
           ),
-          SizedBox(width: 25,),
+          SizedBox(
+            width: 25,
+          ),
           GestureDetector(
             onTap: () {},
             child: Row(
               children: [
                 SizedBox(
-                  width: 30, height: 30, 
+                  width: 30,
+                  height: 30,
                   child: Icon(Icons.bookmark_border, color: Colors.grey),
                 ),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("10"),
               ],
             ),
@@ -92,20 +108,23 @@ class _PostwidgetState extends State<Postwidget> {
     );
   }
 
-  Column Title() {
+  Column Title(final snapshot) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 29),
-          child: Text(
-            "What is The Great Question? ",
-            style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              snapshot['topic'],
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            "Have ever heard something like You must ask the right question But How can I make sure that is the correct question not bad one?",
+            snapshot['detail'],
             style: TextStyle(
               fontSize: 15,
             ),
@@ -117,31 +136,36 @@ class _PostwidgetState extends State<Postwidget> {
     );
   }
 
-  Padding Head() {
+  Padding Head(final snapshot) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       child: Row(
         children: [
           InkWell(
-            child: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('assets/images/Mr.A.jpg'),
+              child: ClipOval(
+            child: SizedBox(
+              width: 75,
+              height: 75,
+              child: CachedImage(snapshot['profileImage']),
             ),
-          ),
+          )),
           SizedBox(
-            width: 10,
+            width: 13,
           ),
           Column(
             children: [
               Text(
-                "Mr.A",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                snapshot['username'],
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 2,
               ),
               Text(
-                "3 days ago",
+                snapshot['time'] != null
+                    ? formatDate(
+                        snapshot['time'].toDate(), [yyyy, '-', mm, '-', dd])
+                    : '',
                 style: TextStyle(fontSize: 10),
               ),
             ],
@@ -158,7 +182,7 @@ class _PostwidgetState extends State<Postwidget> {
                       borderRadius: BorderRadius.circular(60),
                       border: Border.all(color: Colors.transparent, width: 1)),
                   child: Text(
-                    "# Com Sci",
+                    '# ' + snapshot['category'],
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,

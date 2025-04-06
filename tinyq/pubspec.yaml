@@ -30,6 +30,8 @@ dev_dependencies:
   image_picker: ^1.0.4
   cached_network_image: ^3.4.1
 
+  date_format: ^2.0.9
+
 flutter:
   uses-material-design: true
   assets:

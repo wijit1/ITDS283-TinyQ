@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/data/model/user_profile.dart';
 import 'package:tinyq/widgets/postwidget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<UserProfile> userProfile = [];
+  FirebaseFirestore _firebaseFireStore = FirebaseFirestore.instance;
+
   Future<void> _signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
   }
@@ -35,10 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(right: 320, top: 10,bottom: 10),
+              padding: EdgeInsets.only(right: 320, top: 10, bottom: 10),
               child: Text(
                 "New!!",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17,color: Colors.redAccent),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    color: Colors.redAccent),
               ),
             ),
             Container(
@@ -65,18 +72,45 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(userProfile[index].username,
-                          style: TextStyle(fontWeight: FontWeight.bold),)
+                          Text(
+                            userProfile[index].username,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )
                         ],
                       ),
                     );
                   },
                 )),
-              
-              Padding(
-                padding:  EdgeInsets.all(20.0),
-                child: Postwidget(),
+
+            Expanded(
+              child: StreamBuilder(
+                stream: _firebaseFireStore
+                    .collection('posts')
+                    .orderBy('time', descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text("No posts yet"));
+                  }
+                  final posts = snapshot.data!.docs;
+
+                  return ListView.builder(
+                    padding: EdgeInsets.all(20),
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      final data = posts[index].data();
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0,),
+                        child: Postwidget(data),
+                      );
+                    },
+                  );
+                },
               ),
+            )
           ],
         ));
   }
