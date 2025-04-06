@@ -37,12 +37,13 @@ class Firebase_Firestor{
           .get();
       final snapuser = user.data()!;
       return Usermodel(
-          snapuser['major'],
-          snapuser['email'],
-          snapuser['followers'],
-          snapuser['following'],
-          snapuser['profile'],
-          snapuser['username']);
+        snapuser['major'], 
+        snapuser['email'], 
+        snapuser['followers'], 
+        snapuser['following'], 
+        snapuser['profile'], 
+        snapuser['username'], 
+        );
     } on FirebaseException catch (e) {
       throw exceptions(e.message.toString());
     }
