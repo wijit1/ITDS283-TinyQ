@@ -81,13 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                SizedBox(width: 10,),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 10),
                                   decoration: BoxDecoration(
-                                    color:
-                                         const Color.fromARGB(255, 236, 117, 117), // สีเหลืองอ่อน
+                                    color: const Color.fromARGB(
+                                        255, 236, 117, 117), // สีเหลืองอ่อน
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
@@ -99,6 +101,92 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 2),
+                            decoration: BoxDecoration(color: Color(0xFF5590FF)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Count('10', 'Posts'),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Count(
+                                    snapshot.data!.followers.length.toString(),
+                                    "Followers"),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Count(
+                                    snapshot.data!.following.length.toString(),
+                                    "Following"),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 18),
+                              child: TabBar(
+                                  unselectedLabelColor: Colors.grey,
+                                  labelColor: Color(0xFF225AEB),
+                                  indicatorColor: Color(0xFF225AEB),
+                                  indicatorSize: TabBarIndicatorSize.tab,
+                                  indicatorWeight: 4.0,
+                                  tabs: [
+                                    Icon(
+                                      Icons.comment,
+                                      size: 30,
+                                    ),
+                                    Icon(
+                                      Icons.favorite,
+                                      size: 30,
+                                    ),
+                                    Icon(Icons.bookmark, size: 30),
+                                  ]),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: TabBarView(children: 
+                            [
+                              ListView.builder(
+                                itemCount: 5,
+                                itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(Icons.comment),
+                                  title: Text('Comment ${index + 1}'),
+                                  subtitle: Text('This is a comment.'),
+                                );
+                              }),
+                              ListView.builder(
+                                itemCount: 5,
+                                itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(Icons.comment),
+                                  title: Text('Comment ${index + 1}'),
+                                  subtitle: Text('This is a comment.'),
+                                );
+                              }),
+                              ListView.builder(
+                                itemCount: 5,
+                                itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(Icons.comment),
+                                  title: Text('Comment ${index + 1}'),
+                                  subtitle: Text('This is a comment.'),
+                                );
+                              }),
+                            ]),
                           )
                         ],
                       ),
@@ -108,6 +196,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Column Count(String number, String name) {
+    return Column(
+      children: [
+        Text(
+          number,
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        Text(
+          name,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+        )
+      ],
     );
   }
 }
