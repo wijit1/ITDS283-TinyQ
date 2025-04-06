@@ -51,19 +51,20 @@ class Firebase_Firestor{
 
 
   Future<bool> CreatePost ({
-    required String postImage,
-    required String caption,
-    required String location,
+    
+    required String topic,
+    required String category,
+    required String detail,
   }) async {
     var uid = Uuid().v4();
     DateTime date = new DateTime.now();
     Usermodel user = await  getUser();
     await _firebaseFirestore.collection('posts').doc(uid).set({
-      'postImage': postImage,
       'username': user.username,
       'profileImage': user.profile,
-      'caption': caption,
-      'location': location,
+      'topic': topic,
+      'category': category,
+      'detail': detail,
       'uid': _auth.currentUser!.uid,
       'postId': uid,
       'like': [],

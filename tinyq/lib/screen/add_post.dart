@@ -11,83 +11,127 @@ class AddPost_Screen extends StatefulWidget {
 }
 
 class _AddPost_ScreenState extends State<AddPost_Screen> {
+  final topic = TextEditingController();
+  final category = TextEditingController();
+  final detail = TextEditingController();
+
+  bool isloading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: 300, top: 50),
-            child: Text(
-              "Post",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      body: isloading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.amber,
+              ),
+            )
+          : Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 300, top: 50),
+                  child: Text(
+                    "Post",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Add_Title(),
+                Add_Detail()
+              ],
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Add_Title(),
-          Add_Detail()
-        ],
-      ),
     );
   }
 
   Padding Add_Detail() {
     return Padding(
-          padding: EdgeInsets.all(25.0),
-          child: Container(
-            height: 245,
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                  color: Color(0xFFD9D9D9), width: 2),
-            ),
-            child: Column(
-              children: [
-                TextField(
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Description",
-                    hintStyle: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
+      padding: EdgeInsets.all(25.0),
+      child: Container(
+        height: 245,
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Color(0xFFD9D9D9), width: 2),
+        ),
+        child: Column(
+          children: [
+            TextField(
+              controller: detail,
+              maxLines: 5,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "Description",
+                hintStyle: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade400,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 13),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: null, 
-                        icon: Icon(Icons.image)),
-                      SizedBox(width: 15,),
-                      IconButton(
-                        onPressed: null, 
-                        icon: Icon(Icons.copy)),
-                      SizedBox(width: 15,),
-                      IconButton(
-                        onPressed: null, 
-                        icon: Icon(Icons.emoji_emotions)),
-                      SizedBox(width: 100,),
-                      IconButton(
-                        onPressed: null, 
-                        icon: Image(image: AssetImage('assets/images/addpost_page_send.png'))),
-                    ],
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
-        );
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 13),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconButton(onPressed: null, icon: Icon(Icons.image)),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  IconButton(onPressed: null, icon: Icon(Icons.copy)),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  IconButton(onPressed: null, icon: Icon(Icons.emoji_emotions)),
+                  SizedBox(
+                    width: 100,
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        setState(() {
+                          isloading = true;
+                        });
+                        await Firebase_Firestor().CreatePost(
+                            topic: topic.text,
+                            category: category.text,
+                            detail: detail.text);
+
+                        setState(() {
+                          isloading = false;
+                          topic.clear();
+                          category.clear();
+                          detail.clear();
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Row(
+                              children: [
+                                Icon(Icons.check_circle, color: Colors.white),
+                                SizedBox(width: 10),
+                                Text('Create Post Success!!'),
+                              ],
+                            ),
+                            backgroundColor: Colors.green,
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(seconds: 5),
+                          ),
+                        );
+                      },
+                      icon: Image(
+                          image: AssetImage(
+                              'assets/images/addpost_page_send.png'))),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Padding Add_Title() {
@@ -98,8 +142,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border:
-              Border.all(color: Color(0xFFD9D9D9), width: 2),
+          border: Border.all(color: Color(0xFFD9D9D9), width: 2),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,8 +150,10 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
             FutureBuilder(
               future: Firebase_Firestor().getUser(),
               builder: (context, snapshot) {
-                if(!snapshot.hasData){
-                    return Center(child: CircularProgressIndicator(),);
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
                 return Profile_user(snapshot.data!);
               },
@@ -121,6 +166,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
+                      controller: topic,
                       decoration: InputDecoration(
                         hintText: "Your Topic ?",
                         hintStyle: TextStyle(
@@ -130,8 +176,11 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 13,),
+                    SizedBox(
+                      height: 13,
+                    ),
                     TextField(
+                      controller: category,
                       decoration: InputDecoration(
                         hintText: "# category",
                         hintStyle: TextStyle(
