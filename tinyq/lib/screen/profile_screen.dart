@@ -46,43 +46,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   width: 35,
                                 ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      snapshot.data!.username,
-                                      style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      snapshot.data!.major,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: const Color.fromARGB(
-                                              255, 172, 169, 169)),
-                                    )
-                                  ],
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        snapshot.data!.username,
+                                        style: TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        snapshot.data!.major,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: const Color.fromARGB(
+                                                255, 172, 169, 169)),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 50,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color(0xFFFFF7D9), // สีเหลืองอ่อน
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    "Edit",
-                                    style: TextStyle(
-                                        color: Colors.lightBlue,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
                                 ),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
