@@ -32,19 +32,22 @@ class _CommentState extends State<Comment> {
         child: Column(
           children: [
             Padding(
-                padding: EdgeInsets.only(top: 40, left: 10),
+                padding: EdgeInsets.only(top: 20, left: 10),
                 child: Head(snapshot)),
-            SizedBox(
-              height: 20,
-            ),
             Detail(snapshot),
             Action(),
-            Divider(color: Color(0xFFB9B9B9), thickness: 2.0),
+            Divider(color: Colors.grey.shade300, thickness: 2.0),
             Write_comment(),
+            Divider(color: Colors.grey.shade300, thickness: 2.0),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 14),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 alignment: Alignment.topLeft,
-                child: Text("other")),
+                child: Text("other",
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ) ,)),
             Expanded(
               child: StreamBuilder(
                   stream: _firestore
@@ -53,15 +56,19 @@ class _CommentState extends State<Comment> {
                       .collection('comments')
                       .snapshots(),
                   builder: (context, csnapshot) {
+
+                    if (!csnapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
                     final comments = csnapshot.data!.docs;
                     if (comments.isEmpty) {
-                        return Center(
-                          child: Text("No comment here",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                          ),));
-                      }
+                      return Center(
+                          child: Text(
+                        "No comment here",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ));
+                    }
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: ListView.builder(
@@ -84,38 +91,57 @@ class _CommentState extends State<Comment> {
   }
 
   Widget comment_item(final csnapshot) {
-    return Column(
-      children: [
-        Divider(),
-        Row(
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipOval(
               child: SizedBox(
-                height: 35,
-                width: 35,
+                height:60,
+                width: 60,
                 child: CachedImage(
                   csnapshot['profileImage'],
                 ),
               ),
             ),
-            Text(csnapshot['username'],
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-            )),
-            Text(csnapshot['comment'],
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-            )),
+            SizedBox(width: 25),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    csnapshot['username'],
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    csnapshot['comment'],
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+      Divider(
+        color: Colors.grey.shade300,
+        thickness: 2,
+      ),
+    ],
+  );
+}
 
-      ],
-    );
-  }
 
   Column Write_comment() {
     return Column(
@@ -164,7 +190,7 @@ class _CommentState extends State<Comment> {
               ),
               Container(
                 width: 300,
-                height: 130,
+                height: 120,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -176,7 +202,7 @@ class _CommentState extends State<Comment> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextField(
                         controller: comment,
-                        maxLines: 3,
+                        maxLines: 2,
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "What do you think?"),
@@ -188,19 +214,19 @@ class _CommentState extends State<Comment> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                          islodaing = true;
-                        });
-                        if (comment.text.isNotEmpty) {
-                          Firebase_Firestor().Comments(
-                            comment: comment.text,
-                            type: widget.type,
-                            uidd: widget.snapshot['postId'],
-                          );
-                        }
-                        setState(() {
-                          islodaing = false;
-                          comment.clear();
-                        });
+                            islodaing = true;
+                          });
+                          if (comment.text.isNotEmpty) {
+                            Firebase_Firestor().Comments(
+                              comment: comment.text,
+                              type: widget.type,
+                              uidd: widget.snapshot['postId'],
+                            );
+                          }
+                          setState(() {
+                            islodaing = false;
+                            comment.clear();
+                          });
                         },
                         child: Image(
                             image: AssetImage(
