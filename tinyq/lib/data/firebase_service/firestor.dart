@@ -4,8 +4,8 @@ import 'package:tinyq/data/model/user_model.dart';
 import 'package:tinyq/util/exception.dart';
 import 'package:uuid/uuid.dart';
 
-class Firebase_Firestor{
-  final FirebaseFirestore  _firebaseFirestore = FirebaseFirestore.instance;
+class Firebase_Firestor {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<bool> CreateUser({
@@ -13,7 +13,7 @@ class Firebase_Firestor{
     required String username,
     required String major,
     required String profile,
-  })async{
+  }) async {
     await _firebaseFirestore
         .collection('users')
         .doc(_auth.currentUser!.uid)
@@ -28,7 +28,6 @@ class Firebase_Firestor{
     return true;
   }
 
-
   Future<Usermodel> getUser({String? UID}) async {
     try {
       final user = await _firebaseFirestore
@@ -37,29 +36,26 @@ class Firebase_Firestor{
           .get();
       final snapuser = user.data()!;
       return Usermodel(
-        snapuser['major'], 
-        snapuser['email'], 
-        snapuser['followers'], 
-        snapuser['following'], 
-        snapuser['profile'], 
-        snapuser['username'], 
-        );
+        snapuser['major'],
+        snapuser['email'],
+        snapuser['followers'],
+        snapuser['following'],
+        snapuser['profile'],
+        snapuser['username'],
+      );
     } on FirebaseException catch (e) {
       throw exceptions(e.message.toString());
     }
   }
 
-
-
-  Future<bool> CreatePost ({
-    
+  Future<bool> CreatePost({
     required String topic,
     required String category,
     required String detail,
   }) async {
     var uid = Uuid().v4();
     DateTime date = new DateTime.now();
-    Usermodel user = await  getUser();
+    Usermodel user = await getUser();
     await _firebaseFirestore.collection('posts').doc(uid).set({
       'username': user.username,
       'profileImage': user.profile,
@@ -74,4 +70,24 @@ class Firebase_Firestor{
     return true;
   }
 
+  Future<bool> Comments({
+    required String comment,
+    required String type,
+    required String uidd,
+  }) async {
+    var uid = Uuid().v4();
+    Usermodel user = await getUser();
+    await _firebaseFirestore
+        .collection(type)
+        .doc(uidd)
+        .collection('comments')
+        .doc(uid)
+        .set({
+      'comment': comment,
+      'username': user.username,
+      'profileImage': user.profile,
+      'CommentUid': uid,
+    });
+    return true;
+  }
 }

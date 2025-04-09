@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
+import 'package:tinyq/widgets/comment.dart';
 
 class Postwidget extends StatefulWidget {
   final snapshot;
@@ -50,7 +51,10 @@ class _PostwidgetState extends State<Postwidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
+            },
             child: Row(
               children: [
                 SizedBox(
