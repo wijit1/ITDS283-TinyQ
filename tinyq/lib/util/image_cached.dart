@@ -11,20 +11,17 @@ class CachedImage extends StatelessWidget {
     return CachedNetworkImage(
       fit: BoxFit.cover,
       imageUrl: imageURL!,
-      progressIndicatorBuilder: (context,url,progress){
-        return Container(
-          child: Padding(
-            padding: EdgeInsets.all(130),
-            child: CircularProgressIndicator(
-              value: progress.progress,
-              color: Colors.black,
-            ),
+      placeholder: (context, url) => Center(
+        child: SizedBox(
+          width: 24,
+          height: 24,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Colors.grey,
           ),
-        );
-      },
-      errorWidget: (context, url, error) {
-      return Container(color: Colors.amber,);
-      },
+        ),
+      ),
+      errorWidget: (context, url, error) => Icon(Icons.error, color: Colors.grey),
     );
   }
 }

@@ -65,6 +65,7 @@ class Firebase_Firestor {
       'uid': _auth.currentUser!.uid,
       'postId': uid,
       'like': [],
+      'bookmark': [],
       'time': date
     });
     return true;
@@ -90,4 +91,30 @@ class Firebase_Firestor {
     });
     return true;
   }
+
+  Future<String> like({
+    required List like,
+    required String type,
+    required String uid,
+    required String postId,
+  }) async {
+    String res = 'some error';
+    try {
+      if (like.contains(uid)) {
+        _firebaseFirestore.collection(type).doc(postId).update({
+          'like': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        _firebaseFirestore.collection(type).doc(postId).update({
+          'like': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = 'success';
+    } on Exception catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
+  
 }

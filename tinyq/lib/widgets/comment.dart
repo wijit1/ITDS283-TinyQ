@@ -4,6 +4,8 @@ import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class Comment extends StatefulWidget {
   String type;
   final snapshot;
@@ -18,6 +20,15 @@ class _CommentState extends State<Comment> {
   final comment = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool islodaing = false;
+
+  String user = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    user = _auth.currentUser!.uid;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +53,14 @@ class _CommentState extends State<Comment> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 alignment: Alignment.topLeft,
-                child: Text("other",
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ) ,)),
+                child: Text(
+                  "other",
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                )),
             Expanded(
               child: StreamBuilder(
                   stream: _firestore
@@ -56,7 +69,6 @@ class _CommentState extends State<Comment> {
                       .collection('comments')
                       .snapshots(),
                   builder: (context, csnapshot) {
-
                     if (!csnapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
                     }
@@ -91,57 +103,56 @@ class _CommentState extends State<Comment> {
   }
 
   Widget comment_item(final csnapshot) {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipOval(
-              child: SizedBox(
-                height:60,
-                width: 60,
-                child: CachedImage(
-                  csnapshot['profileImage'],
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipOval(
+                child: SizedBox(
+                  height: 60,
+                  width: 60,
+                  child: CachedImage(
+                    csnapshot['profileImage'],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 25),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    csnapshot['username'],
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+              SizedBox(width: 25),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      csnapshot['username'],
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    csnapshot['comment'],
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
+                    SizedBox(height: 4),
+                    Text(
+                      csnapshot['comment'],
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      Divider(
-        color: Colors.grey.shade300,
-        thickness: 2,
-      ),
-    ],
-  );
-}
-
+        Divider(
+          color: Colors.grey.shade300,
+          thickness: 2,
+        ),
+      ],
+    );
+  }
 
   Column Write_comment() {
     return Column(
@@ -268,21 +279,46 @@ class _CommentState extends State<Comment> {
           SizedBox(
             width: 25,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Icon(Icons.favorite_border, color: Colors.grey),
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection(widget.type)
+                .doc(widget.snapshot['postId'])
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+
+              final post = snapshot.data!;
+              final likes = List<String>.from(post['like'] ?? []);
+
+              return GestureDetector(
+                onTap: () {
+                  Firebase_Firestor().like(
+                    like: likes,
+                    type: widget.type,
+                    uid: user,
+                    postId: widget.snapshot['postId'],
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                      height: 30,
+                      child: Icon(
+                        likes.contains(user)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: likes.contains(user) ? Colors.red : Colors.black,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Text(likes.length.toString()),
+                  ],
                 ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text("10"),
-              ],
-            ),
+              );
+            },
           ),
           SizedBox(
             width: 25,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
 import 'package:tinyq/widgets/comment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Postwidget extends StatefulWidget {
   final snapshot;
@@ -12,6 +14,13 @@ class Postwidget extends StatefulWidget {
 }
 
 class _PostwidgetState extends State<Postwidget> {
+  String user = ''; 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
+  void initState(){
+    super.initState();
+    user = _auth.currentUser!.uid; 
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,18 +82,31 @@ class _PostwidgetState extends State<Postwidget> {
             width: 25,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+
+              Firebase_Firestor().like(
+                like: widget.snapshot['like'], 
+                type: 'posts', 
+                uid: user, 
+                postId: widget.snapshot['postId']);
+            },
             child: Row(
               children: [
                 SizedBox(
                   width: 30,
                   height: 30,
-                  child: Icon(Icons.favorite_border, color: Colors.grey),
+                  child: Icon(
+                  widget.snapshot['like'].contains(user)
+                  ?Icons.favorite
+                  :Icons.favorite_border, 
+                  color: widget.snapshot['like'].contains(user)
+                        ? Colors.red
+                        : Colors.black),
                 ),
                 SizedBox(
                   width: 5,
                 ),
-                Text("10"),
+                Text(widget.snapshot['like'].length.toString()),
               ],
             ),
           ),
@@ -92,7 +114,9 @@ class _PostwidgetState extends State<Postwidget> {
             width: 25,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              
+            },
             child: Row(
               children: [
                 SizedBox(
