@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tinyq/widgets/comment.dart';
 
 class ProfileScreen extends StatefulWidget {
   String Uid;
@@ -195,7 +196,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     if (!postSnapshot.hasData) {
                                       return Count('0', 'Posts');
                                     }
-                                    final postCount = postSnapshot.data!.docs.length;
+                                    final postCount =
+                                        postSnapshot.data!.docs.length;
                                     return Count(postCount.toString(), 'Posts');
                                   },
                                 ),
@@ -242,16 +244,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height,
-                            child: TabBarView(children: [
-                              ListView.builder(
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      leading: Icon(Icons.comment),
-                                      title: Text('Comment ${index + 1}'),
-                                      subtitle: Text('This is a comment.'),
-                                    );
-                                  }),
+                            child: TabBarView(
+                              children: [
+                              StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('posts')
+                                    .where('uid', isEqualTo: widget.Uid)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+
+                                  if (!snapshot.hasData ||
+                                      snapshot.data!.docs.isEmpty) {
+                                    return Center(child: Text("No posts yet"));
+                                  }
+
+                                  final posts = snapshot.data!.docs;
+
+                                  return ListView.builder(
+                                    itemCount: posts.length,
+                                    itemBuilder: (context, index) {
+                                      final data = posts[index].data()
+                                          as Map<String, dynamic>;
+                                      return Column(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                                Navigator.push(context, 
+                                                MaterialPageRoute(builder: (context)=> Comment('posts',data)));
+                                              },
+                                              child: Container(
+                                              padding: EdgeInsets.only(left: 20,top: 5),
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(width: 10,),
+                                                  Icon(Icons.library_books_outlined),
+                                                  SizedBox(width: 20,),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(data['topic'],
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold
+                                                          ),
+                                                        ),
+                                                        Text(data['detail'],
+                                                          softWrap: true,      
+                                                          overflow: TextOverflow.visible,
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                            ),
+                                                          ),
+                                                          
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Divider(color: Colors.grey.shade300, thickness: 2.0),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
                               ListView.builder(
                                   itemCount: 5,
                                   itemBuilder: (context, index) {
