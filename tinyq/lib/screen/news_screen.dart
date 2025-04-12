@@ -24,7 +24,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   Future<List<Map<String, dynamic>>> fetchNews(String category) async {
     final url =
-        'https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=92a938b6e5b940bbb934f733838f3dea'; 
+        'https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey='; 
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
