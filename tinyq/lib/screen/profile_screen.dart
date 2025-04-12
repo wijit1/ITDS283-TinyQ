@@ -1,26 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/util/image_cached.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  String Uid;
+  ProfileScreen(this.Uid, {super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  int post_length = 0;
+  bool yours = false;
+  List following = [];
+  bool isfollow = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getdata();
+    if (_auth.currentUser!.uid == widget.Uid) {
+      setState(() {
+        yours = true;
+      });
+    }
+  }
+
+  getdata() async {
+    DocumentSnapshot snap = await _firebaseFirestore
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .get();
+    following = (snap.data()! as dynamic)['following'];
+    if (following.contains(widget.Uid)) {
+      setState(() {
+        isfollow = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFF5590FF),
+        ),
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: FutureBuilder(
-                  future: Firebase_Firestor().getUser(),
+                  future: Firebase_Firestor().getUser(UID: widget.Uid),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
@@ -68,21 +107,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   width: 50,
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 236, 117, 117), // สีเหลืองอ่อน
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    "Log out",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                Visibility(
+                                  visible: !isfollow,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (yours == false) {
+                                        Firebase_Firestor()
+                                            .flollow(uid: widget.Uid);
+                                        setState(() {
+                                          isfollow = true;
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 236, 117, 117), // สีเหลืองอ่อน
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: yours
+                                          ? Text(
+                                              "Log out",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : Text(
+                                              'Follow',
+                                              style: TextStyle(
+                                                  color: Colors.amber),
+                                            ),
+                                    ),
                                   ),
                                 ),
+                                Visibility(
+                                  visible: isfollow,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Firebase_Firestor()
+                                          .flollow(uid: widget.Uid);
+                                      setState(() {
+                                        isfollow = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color:
+                                                  Colors.blueAccent.shade700)),
+                                      child: Text(
+                                        "Unfollow",
+                                        style: TextStyle(
+                                            color: Color(0xFF5590FF),
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -97,7 +186,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 SizedBox(
                                   width: 40,
                                 ),
-                                Count('10', 'Posts'),
+                                StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('posts')
+                                      .where('uid', isEqualTo: widget.Uid)
+                                      .snapshots(),
+                                  builder: (context, postSnapshot) {
+                                    if (!postSnapshot.hasData) {
+                                      return Count('0', 'Posts');
+                                    }
+                                    final postCount = postSnapshot.data!.docs.length;
+                                    return Count(postCount.toString(), 'Posts');
+                                  },
+                                ),
                                 SizedBox(
                                   width: 50,
                                 ),
@@ -141,35 +242,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height,
-                            child: TabBarView(children: 
-                            [
+                            child: TabBarView(children: [
                               ListView.builder(
-                                itemCount: 5,
-                                itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: Icon(Icons.comment),
-                                  title: Text('Comment ${index + 1}'),
-                                  subtitle: Text('This is a comment.'),
-                                );
-                              }),
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      leading: Icon(Icons.comment),
+                                      title: Text('Comment ${index + 1}'),
+                                      subtitle: Text('This is a comment.'),
+                                    );
+                                  }),
                               ListView.builder(
-                                itemCount: 5,
-                                itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: Icon(Icons.comment),
-                                  title: Text('Comment ${index + 1}'),
-                                  subtitle: Text('This is a comment.'),
-                                );
-                              }),
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      leading: Icon(Icons.comment),
+                                      title: Text('Comment ${index + 1}'),
+                                      subtitle: Text('This is a comment.'),
+                                    );
+                                  }),
                               ListView.builder(
-                                itemCount: 5,
-                                itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: Icon(Icons.comment),
-                                  title: Text('Comment ${index + 1}'),
-                                  subtitle: Text('This is a comment.'),
-                                );
-                              }),
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      leading: Icon(Icons.comment),
+                                      title: Text('Comment ${index + 1}'),
+                                      subtitle: Text('This is a comment.'),
+                                    );
+                                  }),
                             ]),
                           )
                         ],

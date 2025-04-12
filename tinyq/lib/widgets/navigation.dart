@@ -22,6 +22,7 @@ int _currentIndex = 0;
 class _Navigation_ScreenState extends State<Navigation_Screen> {
 
   late PageController pageController; 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _signOut(BuildContext context) async{
     await FirebaseAuth.instance.signOut();
@@ -130,7 +131,7 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
           SearchScreen(),
           AddPost_Screen(),
           NewsScreen(),
-          ProfileScreen(),
+          ProfileScreen(_auth.currentUser!.uid),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
+import 'package:tinyq/screen/profile_screen.dart';
 import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
 import 'package:tinyq/widgets/comment.dart';
@@ -180,7 +181,15 @@ class _PostwidgetState extends State<Postwidget> {
       child: Row(
         children: [
           InkWell(
-              child: ClipOval(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context){
+                    return ProfileScreen(snapshot['uid']);
+                  })
+              );
+            },
+            child: ClipOval(
             child: SizedBox(
               width: 75,
               height: 75,
