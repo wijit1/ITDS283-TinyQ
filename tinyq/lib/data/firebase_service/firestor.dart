@@ -116,5 +116,30 @@ class Firebase_Firestor {
     return res;
   }
 
+
+   Future<String> bookmark({
+    required List bookmark,
+    required String type,
+    required String uid,
+    required String postId,
+  }) async {
+    String res = 'some error';
+    try {
+      if (bookmark.contains(uid)) {
+        _firebaseFirestore.collection(type).doc(postId).update({
+          'bookmark': FieldValue.arrayRemove([uid])
+        });
+      } else {
+        _firebaseFirestore.collection(type).doc(postId).update({
+          'bookmark': FieldValue.arrayUnion([uid])
+        });
+      }
+      res = 'success';
+    } on Exception catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
   
 }

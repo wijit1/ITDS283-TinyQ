@@ -115,19 +115,29 @@ class _PostwidgetState extends State<Postwidget> {
           ),
           GestureDetector(
             onTap: () {
-              
+              Firebase_Firestor().bookmark(
+                bookmark: widget.snapshot['bookmark'], 
+                type: 'posts', 
+                uid: user, 
+                postId: widget.snapshot['postId']);
             },
             child: Row(
               children: [
                 SizedBox(
                   width: 30,
                   height: 30,
-                  child: Icon(Icons.bookmark_border, color: Colors.grey),
+                  child: Icon(
+                  widget.snapshot['bookmark'].contains(user)
+                  ?Icons.bookmark
+                  :Icons.bookmark_border, 
+                  color: widget.snapshot['bookmark'].contains(user)
+                        ? Colors.red
+                        : Colors.black),
                 ),
                 SizedBox(
                   width: 5,
                 ),
-                Text("10"),
+                Text(widget.snapshot['bookmark'].length.toString()),
               ],
             ),
           ),
