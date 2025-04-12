@@ -244,96 +244,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height,
-                            child: TabBarView(
-                              children: [
-                              StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('posts')
-                                    .where('uid', isEqualTo: widget.Uid)
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
-
-                                  if (!snapshot.hasData ||
-                                      snapshot.data!.docs.isEmpty) {
-                                    return Center(child: Text("No posts yet"));
-                                  }
-
-                                  final posts = snapshot.data!.docs;
-
-                                  return ListView.builder(
-                                    itemCount: posts.length,
-                                    itemBuilder: (context, index) {
-                                      final data = posts[index].data()
-                                          as Map<String, dynamic>;
-                                      return Column(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                                Navigator.push(context, 
-                                                MaterialPageRoute(builder: (context)=> Comment('posts',data)));
-                                              },
-                                              child: Container(
-                                              padding: EdgeInsets.only(left: 20,top: 5),
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(width: 10,),
-                                                  Icon(Icons.library_books_outlined),
-                                                  SizedBox(width: 20,),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(data['topic'],
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight: FontWeight.bold
-                                                          ),
-                                                        ),
-                                                        Text(data['detail'],
-                                                          softWrap: true,      
-                                                          overflow: TextOverflow.visible,
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                            ),
-                                                          ),
-                                                          
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Divider(color: Colors.grey.shade300, thickness: 2.0),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                              ListView.builder(
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      leading: Icon(Icons.comment),
-                                      title: Text('Comment ${index + 1}'),
-                                      subtitle: Text('This is a comment.'),
-                                    );
-                                  }),
-                              ListView.builder(
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      leading: Icon(Icons.comment),
-                                      title: Text('Comment ${index + 1}'),
-                                      subtitle: Text('This is a comment.'),
-                                    );
-                                  }),
+                            child: TabBarView(children: [
+                              Post_Stream(),
+                              like_Stream(),
+                              Bookmark_Stream(),
                             ]),
                           )
                         ],
@@ -344,6 +258,240 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  StreamBuilder<QuerySnapshot<Object?>> Bookmark_Stream() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('posts')
+          .where('bookmark', arrayContains: widget.Uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text("No bookmarked posts"));
+        }
+
+        final bookmarkedPosts = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: bookmarkedPosts.length,
+          itemBuilder: (context, index) {
+            final data = bookmarkedPosts[index].data() as Map<String, dynamic>;
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Comment('posts', data)),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, top: 5),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return ProfileScreen(data['uid']);
+                              }));
+                            },
+                            child: ClipOval(
+                              child: SizedBox(
+                                width: 70,
+                                height: 70,
+                                child: CachedImage(data['profileImage']),
+                              ),
+                            )),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data['topic'],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                data['detail'],
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(color: Colors.grey.shade300, thickness: 2.0),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  StreamBuilder<QuerySnapshot<Object?>> Post_Stream() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('posts')
+          .where('uid', isEqualTo: widget.Uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text("No posts yet"));
+        }
+
+        final posts = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            final data = posts[index].data() as Map<String, dynamic>;
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Comment('posts', data)));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, top: 5),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.library_books_outlined),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data['topic'],
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                data['detail'],
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(color: Colors.grey.shade300, thickness: 2.0),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  StreamBuilder<QuerySnapshot<Object?>> like_Stream() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('posts')
+          .where('like', arrayContains: widget.Uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text("No liked posts"));
+        }
+
+        final likedPosts = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: likedPosts.length,
+          itemBuilder: (context, index) {
+            final data = likedPosts[index].data() as Map<String, dynamic>;
+            return Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Comment('posts', data)),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 20, top: 5),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return ProfileScreen(data['uid']);
+                              }));
+                            },
+                            child: ClipOval(
+                              child: SizedBox(
+                                width: 70,
+                                height: 70,
+                                child: CachedImage(data['profileImage']),
+                              ),
+                            )),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data['topic'],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                data['detail'],
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(color: Colors.grey.shade300, thickness: 2.0),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 
