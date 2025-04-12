@@ -5,6 +5,8 @@ import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
 import 'package:tinyq/widgets/comment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Postwidget extends StatefulWidget {
   final snapshot;
@@ -17,10 +19,26 @@ class Postwidget extends StatefulWidget {
 class _PostwidgetState extends State<Postwidget> {
   String user = ''; 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  int comment_count = 0;
+
+  void get_comment_count()async{
+     QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
+      .collection('posts')
+      .doc(widget.snapshot['postId'])
+      .collection('comments')
+      .get();
+
+      setState(() {
+        comment_count = comment_snapshot.docs.length;
+      });
+  }
+
   @override
   void initState(){
     super.initState();
     user = _auth.currentUser!.uid; 
+    get_comment_count();
   }
   @override
   Widget build(BuildContext context) {
@@ -48,13 +66,13 @@ class _PostwidgetState extends State<Postwidget> {
             thickness: 1, // ความหนา
             color: const Color.fromARGB(255, 207, 206, 206), // สีเส้น
           ),
-          Action()
+          Action( comment_count)
         ],
       ),
     );
   }
 
-  Padding Action() {
+  Padding Action(int comment_count) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -62,8 +80,7 @@ class _PostwidgetState extends State<Postwidget> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context, 
-              MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
+              Navigator.push(context,MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
             },
             child: Row(
               children: [
@@ -75,7 +92,7 @@ class _PostwidgetState extends State<Postwidget> {
                 SizedBox(
                   width: 5,
                 ),
-                Text("10"),
+                Text("$comment_count"),
               ],
             ),
           ),
