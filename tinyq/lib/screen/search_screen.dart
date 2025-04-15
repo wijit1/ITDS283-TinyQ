@@ -67,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         padding: const EdgeInsets.only(
                           bottom: 15.0,
                         ),
-                        child: SearchPostwidget(data),
+                        child: Postwidget(data,search_bool: true,),
                       );
                     },
                   );

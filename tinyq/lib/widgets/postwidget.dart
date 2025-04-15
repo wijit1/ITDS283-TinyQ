@@ -9,8 +9,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Postwidget extends StatefulWidget {
+  final search_bool; 
   final snapshot;
-  const Postwidget(this.snapshot, {super.key});
+  const Postwidget(this.snapshot,{this.search_bool = false,super.key});
 
   @override
   State<Postwidget> createState() => _PostwidgetState();
@@ -177,17 +178,19 @@ class _PostwidgetState extends State<Postwidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            snapshot['detail'],
-            style: TextStyle(
-              fontSize: 15,
+
+        if (!widget.search_bool)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              snapshot['detail'],
+              style: TextStyle(
+                fontSize: 15,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
           ),
-        ),
       ],
     );
   }
