@@ -177,5 +177,30 @@ class Firebase_Firestor {
       print(e.toString());
     }
   }
+
+  Future<bool> CreateNotification({
+    required String title,
+    required String postId,
+    required String ownerId, // Owner Post // User that comment 
+  }) async {
+    String notifId = Uuid().v4(); //  ID for Notification
+    Usermodel commenter = await getUser();
+    await _firebaseFirestore
+        .collection('users')
+        .doc(ownerId)
+        .collection('notification')
+        .doc(notifId)
+        .set({
+        'notificationId': notifId,
+        'title': title,
+        'postId': postId,
+        'triggeredByUserId': _auth.currentUser!.uid,
+        'triggeredByUserName': commenter.username,
+        'triggeredByUserAvatar': commenter.profile,
+        'createdAt': FieldValue.serverTimestamp(),
+    });
+    return true;
+  }
+
   
 }

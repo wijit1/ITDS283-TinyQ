@@ -233,6 +233,12 @@ class _CommentState extends State<Comment> {
                               type: widget.type,
                               uidd: widget.snapshot['postId'],
                             );
+
+                            Firebase_Firestor().CreateNotification(
+                              title: comment.text, 
+                              postId: widget.snapshot['postId'], 
+                              ownerId: widget.snapshot['uid'], 
+                            );
                           }
                           setState(() {
                             islodaing = false;

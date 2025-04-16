@@ -29,7 +29,6 @@ class _PostwidgetState extends State<Postwidget> {
       .doc(widget.snapshot['postId'])
       .collection('comments')
       .get();
-
       setState(() {
         comment_count = comment_snapshot.docs.length;
       });

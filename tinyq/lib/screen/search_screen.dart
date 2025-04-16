@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tinyq/widgets/postwidget.dart';
-import 'package:tinyq/widgets/search_postwidget.dart';
+
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
