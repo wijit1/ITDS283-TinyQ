@@ -42,32 +42,37 @@ class _PostwidgetState extends State<Postwidget> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border:
-              Border.all(color: Color.fromARGB(255, 219, 225, 240), width: 2)),
-      child: Column(
-        children: [
-          Column(
-            children: [
-              Head(widget.snapshot), // User Profile,
-              SizedBox(
-                height: 6,
-              ),
-              Title(widget.snapshot), // Title and Detail
-              SizedBox(
-                height: 9,
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1, // ความหนา
-            color: const Color.fromARGB(255, 207, 206, 206), // สีเส้น
-          ),
-          Action( comment_count)
-        ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border:
+                Border.all(color: Color.fromARGB(255, 219, 225, 240), width: 2)),
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Head(widget.snapshot), // User Profile,
+                SizedBox(
+                  height: 6,
+                ),
+                Title(widget.snapshot), // Title and Detail
+                SizedBox(
+                  height: 9,
+                ),
+              ],
+            ),
+            Divider(
+              thickness: 1, // ความหนา
+              color: const Color.fromARGB(255, 207, 206, 206), // สีเส้น
+            ),
+            Action( comment_count)
+          ],
+        ),
       ),
     );
   }

@@ -24,6 +24,7 @@ class Firebase_Firestor {
       'profile': profile,
       'followers': [],
       'following': [],
+      'uid':_auth.currentUser!.uid,
     });
     return true;
   }
