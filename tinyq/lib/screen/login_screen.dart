@@ -88,31 +88,45 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Padding Login_Button() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      child: InkWell(
-        onTap: () async {
+Padding Login_Button() {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 10.w),
+    child: InkWell(
+      onTap: () async {
+        try {
           await Authentication()
-              .Login(email: email.text, password: password.text);
+              .Login(email: email.text.trim(), password: password.text.trim());
+
+          // ถ้า login สำเร็จ
           Navigator.pop(context);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: 265,
-          height: 60,
-          decoration: BoxDecoration(
-              color: Color(0xFF225AEB),
-              borderRadius: BorderRadius.circular(20)),
-          child: Text(
-            "Log in",
-            style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+        } catch (e) {
+          // ถ้า login ล้มเหลว
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("อีเมลหรือรหัสผ่านไม่ถูกต้อง"),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 265,
+        height: 60,
+        decoration: BoxDecoration(
+          color: Color(0xFF225AEB),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          "Log in",
+          style: TextStyle(
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Padding Textfield(TextEditingController controller, AssetImage icon,
       String type, FocusNode focusNode,

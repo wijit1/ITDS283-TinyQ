@@ -18,7 +18,7 @@ class Authentication{
         email: email.trim(), 
         password: password.trim());
     }on FirebaseAuthException catch(e){
-      throw exceptions(e.message.toString());
+      throw exceptions("Login failed: ${e.message}");
     }
   }
 
