@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/screen/profile_screen.dart';
 import 'package:tinyq/util/image_cached.dart';
@@ -90,8 +91,8 @@ class _PostwidgetState extends State<Postwidget> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 30.w,
+                  height: 30.h,
                   child: Icon(Icons.chat_bubble_outline, color: Colors.grey),
                 ),
                 SizedBox(

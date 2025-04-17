@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/data/model/user_profile.dart';
 import 'package:tinyq/screen/profile_screen.dart';
@@ -46,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 "New!!",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 17,
+                    fontSize: 17.sp,
                     color: Colors.redAccent),
               ),
             ),
             Container(
-                height: 130,
+                height: 130.h,
                 child: StreamBuilder(
                     stream: _firebaseFireStore
                         .collection('users')
@@ -85,8 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             255, 136, 184, 255),
                                         child: ClipOval(
                                           child: SizedBox(
-                                            width: 75,
-                                            height: 75,
+                                            width: 75.w,
+                                            height: 75.h,
                                             child: CachedImage(user['profile']),
                                           ),
                                         )),
