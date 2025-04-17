@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firebase_auth.dart';
@@ -19,10 +18,13 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final email = TextEditingController();
   FocusNode email_F = FocusNode();
+
   final password = TextEditingController();
   FocusNode password_F = FocusNode();
+
   final passwordConfirme = TextEditingController();
   FocusNode passwordConfirme_F = FocusNode();
+
   final username = TextEditingController();
   FocusNode username_F = FocusNode();
 
@@ -35,44 +37,39 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-      body: Container(
-          child: Column(
+      body: Column(
         children: [
           Head(context),
-          SizedBox(
-            height: 10.h,
-          ),
+          SizedBox(height: 10.h),
           Center(
             child: InkWell(
               onTap: () async {
                 File? _imagefilee = await ImagePickerr().uploadImage('gallery');
-                if (_imagefilee == null) {
-                    return;
-                }
+                if (_imagefilee == null) return;
                 setState(() {
                   _imageFile = _imagefilee;
                 });
               },
               child: CircleAvatar(
-                  radius: 43,
-                  backgroundColor: const Color.fromARGB(255, 239, 241, 252),
-                  child: _imageFile == null
-                      ? ClipOval(
-                          child: Image.asset(
-                            'assets/images/sign_up_human.png',
-                            width: double.infinity,
-                            height: 70.h,
-                          ),
-                        )
-                      : CircleAvatar(
-                          radius: 43,
-                          backgroundImage: Image.file(
-                            _imageFile!,
-                            fit: BoxFit.cover,
-                          ).image,
-                          backgroundColor: Colors.grey.shade200,
+                radius: 43,
+                backgroundColor: const Color.fromARGB(255, 239, 241, 252),
+                child: _imageFile == null
+                    ? ClipOval(
+                        child: Image.asset(
+                          'assets/images/sign_up_human.png',
+                          width: double.infinity,
+                          height: 70.h,
                         ),
-                    ),
+                      )
+                    : CircleAvatar(
+                        radius: 43,
+                        backgroundImage: Image.file(
+                          _imageFile!,
+                          fit: BoxFit.cover,
+                        ).image,
+                        backgroundColor: Colors.grey.shade200,
+                      ),
+              ),
             ),
           ),
           Textfield(username, AssetImage("assets/images/user_icon.png"),
@@ -82,13 +79,15 @@ class _SignupScreenState extends State<SignupScreen> {
           Textfield(major, AssetImage("assets/images/major_icon.png"), "Major",
               major_F),
           Textfield(password, AssetImage("assets/images/lock_icon.png"),
-              "Password", password_F),
+              "Password", password_F,
+              obscureText: true),
           Textfield(passwordConfirme, AssetImage("assets/images/lock_icon.png"),
-              "Password Confirm", passwordConfirme_F),
+              "Password Confirm", passwordConfirme_F,
+              obscureText: true),
           Signup_Button(),
           Have(),
         ],
-      )),
+      ),
     );
   }
 
@@ -99,15 +98,14 @@ class _SignupScreenState extends State<SignupScreen> {
         onTap: () async {
           try {
             await Authentication().Signup(
-                email: email.text,
-                password: password.text,
-                passwordConfirme: passwordConfirme.text,
-                username: username.text,
-                major: major.text,
-                profile: _imageFile ?? File(''));
-
+              email: email.text,
+              password: password.text,
+              passwordConfirme: passwordConfirme.text,
+              username: username.text,
+              major: major.text,
+              profile: _imageFile ?? File(''),
+            );
             Navigator.pop(context);
-
           } on exceptions catch (e) {
             dialogBuilder(context, e.message);
           }
@@ -117,12 +115,16 @@ class _SignupScreenState extends State<SignupScreen> {
           width: 200.w,
           height: 60.h,
           decoration: BoxDecoration(
-              color: Color(0xFF225AEB),
-              borderRadius: BorderRadius.circular(20)),
+            color: Color(0xFF225AEB),
+            borderRadius: BorderRadius.circular(20),
+          ),
           child: Text(
             "Sign up ",
             style: TextStyle(
-                fontSize: 25.sp, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 25.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -143,33 +145,30 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 10.h,
                 alignment: Alignment.topLeft,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      iconColor: Colors.white,
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent, // ทำให้เงาหายไป
-                      shape: CircleBorder(), // รูปทรงปุ่มเป็นวงกลม
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 24,
-                    )),
+                  style: ElevatedButton.styleFrom(
+                    iconColor: Colors.white,
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: CircleBorder(),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back, size: 24),
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: 30,
-              ),
+              padding: EdgeInsets.only(left: 30),
               child: Container(
                 alignment: Alignment.topLeft,
                 child: Text(
                   "Create",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 50.sp,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 50.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -180,9 +179,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Text(
                   "Your Account",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40.sp,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 40.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -191,10 +191,9 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Container(
                 alignment: Alignment.centerRight,
                 child: Image(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      "assets/images/sign_up_id_card.png",
-                    )),
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/images/sign_up_id_card.png"),
+                ),
               ),
             ),
           ],
@@ -216,9 +215,7 @@ class _SignupScreenState extends State<SignupScreen> {
               color: Colors.grey,
             ),
           ),
-          SizedBox(
-            width: 15.w,
-          ),
+          SizedBox(width: 15.w),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -231,9 +228,10 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Text(
                 "Login",
                 style: TextStyle(
-                    fontSize: 18.sp,
-                    color: const Color.fromARGB(255, 23, 99, 240),
-                    fontWeight: FontWeight.bold),
+                  fontSize: 18.sp,
+                  color: Color.fromARGB(255, 23, 99, 240),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -242,33 +240,52 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Padding Textfield(TextEditingController controller, AssetImage icon,
-      String type, FocusNode focusNode) {
+  // ✅ แก้ตรงนี้ให้รองรับ obscureText
+  Padding Textfield(
+    TextEditingController controller,
+    AssetImage icon,
+    String type,
+    FocusNode focusNode, {
+    bool obscureText = false,
+  }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: Container(
         width: 320.w,
         height: 55.h,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: TextField(
           style: TextStyle(fontSize: 18.sp, color: Colors.black),
           controller: controller,
           focusNode: focusNode,
+          obscureText: obscureText, // << ซ่อนรหัสผ่านตรงนี้
           decoration: InputDecoration(
-              hintText: type,
-              hintStyle: TextStyle(
-                  color: Color.fromARGB(255, 187, 186, 186), fontSize: 15.sp),
-              prefixIcon: Image(width: 70.w, image: icon),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                      color: Color.fromARGB(255, 199, 193, 193), width: 1.w)),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.pinkAccent, width: 2.w))),
+            hintText: type,
+            hintStyle: TextStyle(
+              color: Color.fromARGB(255, 187, 186, 186),
+              fontSize: 15.sp,
+            ),
+            prefixIcon: Image(width: 70.w, image: icon),
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: Color.fromARGB(255, 199, 193, 193),
+                width: 1.w,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(
+                color: Colors.pinkAccent,
+                width: 2.w,
+              ),
+            ),
+          ),
         ),
       ),
     );

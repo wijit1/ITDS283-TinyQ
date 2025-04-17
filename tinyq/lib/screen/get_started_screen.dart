@@ -34,7 +34,7 @@ class GetStartedScreen extends StatelessWidget {
                       width: 360.w,
                     ),
                   ),
-                  SizedBox(height: 50.h,),
+                  SizedBox(height: 20.h,),
                   SizedBox(
                     width: 275.w,
                     height: 70.h,
