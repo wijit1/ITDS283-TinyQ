@@ -25,13 +25,13 @@ class _NewsScreenState extends State<NewsScreen> {
 
   Future<List<Map<String, dynamic>>> fetchNews(String category) async {
     final url =
-        'https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey='; 
+        'https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=92a938b6e5b940bbb934f733838f3dea'; 
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final List articles = json.decode(response.body)['articles'];
 
-      // 🔥 กรองเฉพาะข่าวที่มีรูป
+      
       final filteredArticles = articles.where((article) =>
           article['urlToImage'] != null &&
           article['urlToImage'].toString().isNotEmpty).toList();

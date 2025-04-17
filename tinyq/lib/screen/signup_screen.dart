@@ -136,11 +136,11 @@ class _SignupScreenState extends State<SignupScreen> {
       color: Color(0xFF225AEB),
       child: SizedBox(
         width: double.infinity,
-        height: 280.h,
+        height: 250.h,
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 30, bottom: 7),
+              padding: EdgeInsets.only(top: 30.h, bottom: 7.h),
               child: Container(
                 height: 10.h,
                 alignment: Alignment.topLeft,

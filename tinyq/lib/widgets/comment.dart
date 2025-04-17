@@ -201,8 +201,8 @@ class _CommentState extends State<Comment> {
                 width: 20.w,
               ),
               Container(
-                width: 300.w,
-                height: 120.h,
+                width: 260.w,
+                height: 100.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
