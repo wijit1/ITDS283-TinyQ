@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Textfield(email, AssetImage("assets/images/mail_icon.png"), "Email", email_F),
-          Textfield(password, AssetImage("assets/images/lock_icon.png"), "Password", password_F),
+          Textfield(password, AssetImage("assets/images/lock_icon.png"), "Password", password_F, isPassword: true),
           Login_Button(),
           Have()
         ],
@@ -107,36 +107,39 @@ class _LoginScreenState extends State<LoginScreen> {
         );
   }
 
-  Padding Textfield(TextEditingController controller, AssetImage icon, String type,FocusNode focusNode) {
-    return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w,vertical: 15.h),
-          child: Container(
-            height: 55.h,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            child: TextField(
-              style: TextStyle(fontSize: 18.sp, color: Colors.black),
-              controller: controller,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                  hintText: type,
-                  hintStyle: TextStyle(color:  Color.fromARGB(255, 145, 144, 144)),
-                  prefixIcon: Image(
-                    width: 70.w,
-                    image: icon),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color:  Color.fromARGB(255, 199, 193, 193), width: 1.w)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide:
-                          BorderSide(color: Colors.pinkAccent, width: 2.w))),
-            ),
+Padding Textfield(TextEditingController controller, AssetImage icon, String type, FocusNode focusNode, {bool isPassword = false}) {
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 15.h),
+    child: Container(
+      height: 55.h,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20)
+      ),
+      child: TextField(
+        obscureText: isPassword,
+        style: TextStyle(fontSize: 18.sp, color: Colors.black),
+        controller: controller,
+        focusNode: focusNode,
+        decoration: InputDecoration(
+          hintText: type,
+          hintStyle: TextStyle(color: Color.fromARGB(255, 145, 144, 144)),
+          prefixIcon: Image(width: 70.w, image: icon),
+          contentPadding: EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Color.fromARGB(255, 199, 193, 193), width: 1.w)
           ),
-        );
-  }
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.pinkAccent, width: 2.w)
+          )
+        ),
+      ),
+    ),
+  );
+}
+
 
   Container Head() {
     return Container(
