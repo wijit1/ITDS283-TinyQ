@@ -23,7 +23,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool yours = false;
   List following = [];
   bool isfollow = false;
-
+  Future<void> _signOut(BuildContext context) async{
+    await FirebaseAuth.instance.signOut();
+  }
   @override
   void initState() {
     super.initState();
@@ -130,12 +132,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: yours
-                                          ? Text(
-                                              "Log out",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            )
+                                          ? GestureDetector(
+                                            onTap: () {
+                                              _signOut(context);
+                                            },
+                                            child: Text(
+                                                "Log out",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
+                                          )
                                           : Text(
                                               'Follow',
                                               style: TextStyle(
@@ -390,7 +397,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text(
                                 data['topic'],
                                 style: TextStyle(
-                                    fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 data['detail'],
@@ -502,12 +510,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           number,
           style: TextStyle(
-              fontSize: 18.sp, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
         ),
         Text(
           name,
           style: TextStyle(
-              fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 15.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
         )
       ],
     );
