@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,7 +56,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        margin: EdgeInsets.symmetric(vertical: 10),
+        margin: EdgeInsets.symmetric(vertical: 10.h),
         elevation: 3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +65,7 @@ class _NewsScreenState extends State<NewsScreen> {
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               child: Image.network(
                 article['urlToImage'],
-                height: 200,
+                height: 200.h,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -73,13 +74,13 @@ class _NewsScreenState extends State<NewsScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 article['title'] ?? '',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0, left: 8.0, right: 8.0),
               child: Text('$date         $time',
-                  style: TextStyle(color: Colors.grey[500], fontSize: 13)),
+                  style: TextStyle(color: Colors.grey[500], fontSize: 13.sp)),
             ),
           ],
         ));
@@ -89,18 +90,18 @@ class _NewsScreenState extends State<NewsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 20),
+        SizedBox(height: 20.h),
         Row(
           children: [
             Icon(Icons.label_important_outline, size: 28, color: Colors.blueAccent),
-            SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Text(
               category[0].toUpperCase() + category.substring(1),
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
             )
           ],
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 10.h),
         FutureBuilder<List<Map<String, dynamic>>>(
           future: fetchNews(category),
           builder: (context, snapshot) {
@@ -134,14 +135,14 @@ class _NewsScreenState extends State<NewsScreen> {
                 Text(
                   "News",
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 40.sp,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
                     decorationColor: Colors.blue,
                     decorationThickness: 2,
                   ),
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 Icon(Icons.campaign_outlined,
                 size: 50,)
               ],

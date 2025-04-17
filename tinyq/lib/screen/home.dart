@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             final user = users[index].data();
                             return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
                               child: Column(
                                 children: [
                                   InkWell(
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 10.w,
                                   ),
                                   Text(
                                     user['username'],

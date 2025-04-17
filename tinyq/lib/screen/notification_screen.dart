@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/util/image_cached.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -50,11 +51,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Container(
                   child: Text(
                     "Noification",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 20.w,
                 ),
                 ImageIcon(
                   AssetImage(
@@ -90,13 +91,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               children: [
                                 ClipOval(
                                   child: SizedBox(
-                                    width: 70,
-                                    height: 70,
+                                    width: 70.w,
+                                    height: 70.h,
                                     child:
                                         CachedImage(data['triggeredByUserAvatar']),
                                   ),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 20.w),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,15 +106,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         "${data['triggeredByUserName']}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
-                                      SizedBox(height: 4),
+                                      SizedBox(height: 4.h),
                                       Text(
                                         data['title'] ?? '',
                                         style: TextStyle(
                                           color: const Color.fromARGB(255, 65, 65, 65),
-                                          fontSize: 15),
+                                          fontSize: 15.sp),
                                       ),
                                     ],
                                   ),
@@ -121,7 +122,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 Text(
                                   timeAgo(data['createdAt']),
                                   style:
-                                      TextStyle(fontSize: 13, color: Colors.grey),
+                                      TextStyle(fontSize: 13.sp, color: Colors.grey),
                                 ),
                                 
                               ],

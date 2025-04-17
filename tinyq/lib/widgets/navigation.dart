@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/screen/add_post.dart';
 import 'package:tinyq/screen/home.dart';
 import 'package:tinyq/screen/news_screen.dart';
@@ -61,7 +62,7 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
         style: TextStyle(
           color: Colors.white,
           fontFamily: "Pacifico",
-          fontSize: 25,
+          fontSize: 25.sp,
           fontWeight: FontWeight.w200
         )),
         backgroundColor: Color(0xFF225AEB),
@@ -79,7 +80,7 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
               size: 28,
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 10.w),
           IconButton(
             onPressed: ()=> _signOut(context), 
             icon: Icon(

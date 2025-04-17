@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/data/model/user_model.dart';
 import 'package:tinyq/util/image_cached.dart';
@@ -33,11 +34,11 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                   padding: EdgeInsets.only(right: 300, top: 50),
                   child: Text(
                     "Post",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 20.h,
                 ),
                 Add_Title(),
                 Add_Detail()
@@ -50,12 +51,12 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
     return Padding(
       padding: EdgeInsets.all(25.0),
       child: Container(
-        height: 245,
+        height: 245.h,
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xFFD9D9D9), width: 2),
+          border: Border.all(color: Color(0xFFD9D9D9), width: 2.w),
         ),
         child: Column(
           children: [
@@ -66,7 +67,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 border: InputBorder.none,
                 hintText: "Description",
                 hintStyle: TextStyle(
-                  fontSize: 25,
+                  fontSize: 25.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade400,
                 ),
@@ -80,15 +81,15 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 children: [
                   IconButton(onPressed: null, icon: Icon(Icons.image)),
                   SizedBox(
-                    width: 15,
+                    width: 15.w,
                   ),
                   IconButton(onPressed: null, icon: Icon(Icons.copy)),
                   SizedBox(
-                    width: 15,
+                    width: 15.w,
                   ),
                   IconButton(onPressed: null, icon: Icon(Icons.emoji_emotions)),
                   SizedBox(
-                    width: 100,
+                    width: 100.w,
                   ),
                   IconButton(
                       onPressed: () async {
@@ -112,7 +113,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                             content: Row(
                               children: [
                                 Icon(Icons.check_circle, color: Colors.white),
-                                SizedBox(width: 10),
+                                SizedBox(width: 10.w),
                                 Text('Create Post Success!!'),
                               ],
                             ),
@@ -142,7 +143,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Color(0xFFD9D9D9), width: 2),
+          border: Border.all(color: Color(0xFFD9D9D9), width: 2.w),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +159,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 return Profile_user(snapshot.data!);
               },
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -170,14 +171,14 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                       decoration: InputDecoration(
                         hintText: "Your Topic ?",
                         hintStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 77, 118, 221),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 13,
+                      height: 13.h,
                     ),
                     TextField(
                       controller: category,
@@ -200,8 +201,8 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
   Widget Profile_user(Usermodel user) {
     return ClipOval(
       child: SizedBox(
-        width: 75,
-        height: 75,
+        width: 75.w,
+        height: 75.h,
         child: CachedImage(user.profile),
       ),
     );

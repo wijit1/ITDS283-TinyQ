@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/widgets/postwidget.dart';
 
 
@@ -79,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 Widget Category_Topic(List items) {
   return SizedBox(
-    height: 180,
+    height: 180.h,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: GridView.builder(
@@ -118,8 +119,8 @@ Widget Category_Topic(List items) {
                   ClipOval(
                     child: Image.asset(
                       item['image'],
-                      width: 30,
-                      height: 30,
+                      width: 30.w,
+                      height: 30.h,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -128,7 +129,7 @@ Widget Category_Topic(List items) {
                     child: Text(
                       item['topic'],
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 24.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
@@ -151,7 +152,7 @@ Widget Category_Topic(List items) {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       child: Container(
         width: double.infinity,
-        height: 40,
+        height: 40.h,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(20)),

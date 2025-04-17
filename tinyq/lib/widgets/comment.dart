@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/util/image_cached.dart';
 import 'package:date_format/date_format.dart';
@@ -51,14 +52,14 @@ class _CommentState extends State<Comment> {
             Write_comment(),
             Divider(color: Colors.grey.shade300, thickness: 2.0),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 alignment: Alignment.topLeft,
                 child: Text(
                   "other",
                   style: TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                   ),
                 )),
             Expanded(
@@ -78,11 +79,11 @@ class _CommentState extends State<Comment> {
                           child: Text(
                         "No comment here",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20.sp, fontWeight: FontWeight.bold),
                       ));
                     }
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
                       child: ListView.builder(
                           itemCount: csnapshot.data == null
                               ? 0
@@ -112,14 +113,14 @@ class _CommentState extends State<Comment> {
             children: [
               ClipOval(
                 child: SizedBox(
-                  height: 60,
-                  width: 60,
+                  height: 60.h,
+                  width: 60.w,
                   child: CachedImage(
                     csnapshot['profileImage'],
                   ),
                 ),
               ),
-              SizedBox(width: 25),
+              SizedBox(width: 25.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,16 +128,16 @@ class _CommentState extends State<Comment> {
                     Text(
                       csnapshot['username'],
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Text(
                       csnapshot['comment'],
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -163,7 +164,7 @@ class _CommentState extends State<Comment> {
           child: Text(
             "comment here",
             style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.blueAccent),
           ),
@@ -184,28 +185,28 @@ class _CommentState extends State<Comment> {
                     children: [
                       ClipOval(
                         child: SizedBox(
-                          width: 70,
-                          height: 70,
+                          width: 70.w,
+                          height: 70.h,
                           child: CachedImage(snapshot.data!.profile),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                     ],
                   );
                 },
               ),
               SizedBox(
-                width: 20,
+                width: 20.w,
               ),
               Container(
-                width: 300,
-                height: 120,
+                width: 300.w,
+                height: 120.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Color(0xFFD9D9D9), width: 2),
+                  border: Border.all(color: Color(0xFFD9D9D9), width: 2.w),
                 ),
                 child: Column(
                   children: [
@@ -262,7 +263,7 @@ class _CommentState extends State<Comment> {
 
   Padding Action() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -271,19 +272,19 @@ class _CommentState extends State<Comment> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 30.w,
+                  height: 30.h,
                   child: Icon(Icons.chat_bubble_outline, color: Colors.grey),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 5.w,
                 ),
                 Text("10"),
               ],
             ),
           ),
           SizedBox(
-            width: 25,
+            width: 25.w,
           ),
           StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
@@ -310,8 +311,8 @@ class _CommentState extends State<Comment> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 30,
-                      height: 30,
+                      width: 30.w,
+                      height: 30.h,
                       child: Icon(
                         likes.contains(user)
                             ? Icons.favorite
@@ -319,7 +320,7 @@ class _CommentState extends State<Comment> {
                         color: likes.contains(user) ? Colors.red : Colors.black,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(width: 5.w),
                     Text(likes.length.toString()),
                   ],
                 ),
@@ -327,19 +328,19 @@ class _CommentState extends State<Comment> {
             },
           ),
           SizedBox(
-            width: 25,
+            width: 25.w,
           ),
           GestureDetector(
             onTap: () {},
             child: Row(
               children: [
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 30.w,
+                  height: 30.h,
                   child: Icon(Icons.bookmark_border, color: Colors.grey),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 5.w,
                 ),
                 Text("10"),
               ],
@@ -361,7 +362,7 @@ class _CommentState extends State<Comment> {
               alignment: Alignment.centerLeft,
               child: Text(
                 snapshot['topic'],
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -370,7 +371,7 @@ class _CommentState extends State<Comment> {
             child: Text(
               snapshot['detail'],
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
               ),
             ),
           ),
@@ -381,58 +382,58 @@ class _CommentState extends State<Comment> {
 
   Padding Head(snapshot) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       child: Row(
         children: [
           InkWell(
               child: ClipOval(
             child: SizedBox(
-              width: 75,
-              height: 75,
+              width: 75.w,
+              height: 75.h,
               child: CachedImage(snapshot['profileImage']),
             ),
           )),
           SizedBox(
-            width: 13,
+            width: 13.w,
           ),
           Column(
             children: [
               Text(
                 snapshot['username'],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 2,
+                height: 2.h,
               ),
               Text(
                 snapshot['time'] != null
                     ? formatDate(
                         snapshot['time'].toDate(), [yyyy, '-', mm, '-', dd])
                     : '',
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 10.sp),
               ),
             ],
           ),
           SizedBox(
-            width: 30,
+            width: 30.w,
           ),
           Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 67, 120, 255),
                       borderRadius: BorderRadius.circular(60),
-                      border: Border.all(color: Colors.transparent, width: 1)),
+                      border: Border.all(color: Colors.transparent, width: 1.w)),
                   child: Text(
                     '# ' + snapshot['category'],
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         color: Colors.white),
                   )),
               SizedBox(
-                height: 20,
+                height: 20.h,
               )
             ],
           )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinyq/screen/login_screen.dart';
 import 'package:tinyq/screen/signup_screen.dart';
@@ -12,7 +13,7 @@ class GetStartedScreen extends StatelessWidget {
           backgroundColor: Color(0xFF225AEB),
           body: Center(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 60),
+              padding: EdgeInsets.symmetric(vertical: 60.h),
               child: Column(
                 children: [
                   Container(
@@ -20,23 +21,23 @@ class GetStartedScreen extends StatelessWidget {
                     child: Text(
                       "TinyQ?",
                       style: GoogleFonts.pacifico(
-                          fontSize: 80,
+                          fontSize: 80.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.white),
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.symmetric(vertical: 3),
+                    padding:  EdgeInsets.symmetric(vertical: 3.h),
                     child: Image(
                       image: AssetImage('assets/images/app_icon.png'),
-                      height: 360,
-                      width: 360,
+                      height: 360.h,
+                      width: 360.w,
                     ),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 50.h,),
                   SizedBox(
-                    width: 275,
-                    height: 70,
+                    width: 275.w,
+                    height: 70.h,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -52,14 +53,14 @@ class GetStartedScreen extends StatelessWidget {
                       child: Container(
                         child: Text("Get Start",
                         style: TextStyle(
-                          fontSize: 25
+                          fontSize: 25.sp
                         ),),
                       )),
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 25.h,),
                   SizedBox(
-                    width: 275,
-                    height: 70,
+                    width: 275.w,
+                    height: 70.h,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amberAccent,
@@ -75,7 +76,7 @@ class GetStartedScreen extends StatelessWidget {
                       child: Container(
                         child: Text("Log in",
                         style: TextStyle(
-                          fontSize: 25
+                          fontSize: 25.sp
                         ),),
                       )),
                   )

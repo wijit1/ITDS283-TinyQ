@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firebase_auth.dart';
 import 'package:tinyq/screen/home.dart';
 import 'package:tinyq/util/dialog.dart';
@@ -39,7 +40,7 @@ class _SignupScreenState extends State<SignupScreen> {
         children: [
           Head(context),
           SizedBox(
-            height: 10,
+            height: 10.h,
           ),
           Center(
             child: InkWell(
@@ -60,7 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: Image.asset(
                             'assets/images/sign_up_human.png',
                             width: double.infinity,
-                            height: 70,
+                            height: 70.h,
                           ),
                         )
                       : CircleAvatar(
@@ -113,15 +114,15 @@ class _SignupScreenState extends State<SignupScreen> {
         },
         child: Container(
           alignment: Alignment.center,
-          width: 200,
-          height: 60,
+          width: 200.w,
+          height: 60.h,
           decoration: BoxDecoration(
               color: Color(0xFF225AEB),
               borderRadius: BorderRadius.circular(20)),
           child: Text(
             "Sign up ",
             style: TextStyle(
-                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 25.sp, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -133,13 +134,13 @@ class _SignupScreenState extends State<SignupScreen> {
       color: Color(0xFF225AEB),
       child: SizedBox(
         width: double.infinity,
-        height: 280,
+        height: 280.h,
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.only(top: 30, bottom: 7),
               child: Container(
-                height: 10,
+                height: 10.h,
                 alignment: Alignment.topLeft,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -167,7 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   "Create",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 50,
+                      fontSize: 50.sp,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -180,7 +181,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   "Your Account",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -211,12 +212,12 @@ class _SignupScreenState extends State<SignupScreen> {
           Text(
             "Already have an account ?",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               color: Colors.grey,
             ),
           ),
           SizedBox(
-            width: 15,
+            width: 15.w,
           ),
           GestureDetector(
             onTap: () {
@@ -230,7 +231,7 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Text(
                 "Login",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     color: const Color.fromARGB(255, 23, 99, 240),
                     fontWeight: FontWeight.bold),
               ),
@@ -246,28 +247,28 @@ class _SignupScreenState extends State<SignupScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: Container(
-        width: 320,
-        height: 55,
+        width: 320.w,
+        height: 55.h,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(20)),
         child: TextField(
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: TextStyle(fontSize: 18.sp, color: Colors.black),
           controller: controller,
           focusNode: focusNode,
           decoration: InputDecoration(
               hintText: type,
               hintStyle: TextStyle(
-                  color: Color.fromARGB(255, 187, 186, 186), fontSize: 15),
-              prefixIcon: Image(width: 70, image: icon),
+                  color: Color.fromARGB(255, 187, 186, 186), fontSize: 15.sp),
+              prefixIcon: Image(width: 70.w, image: icon),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                   borderSide: BorderSide(
-                      color: Color.fromARGB(255, 199, 193, 193), width: 1)),
+                      color: Color.fromARGB(255, 199, 193, 193), width: 1.w)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.pinkAccent, width: 2))),
+                  borderSide: BorderSide(color: Colors.pinkAccent, width: 2.w))),
         ),
       ),
     );

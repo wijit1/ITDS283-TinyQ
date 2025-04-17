@@ -59,11 +59,11 @@ class _PostwidgetState extends State<Postwidget> {
               children: [
                 Head(widget.snapshot), // User Profile,
                 SizedBox(
-                  height: 6,
+                  height: 6.h,
                 ),
                 Title(widget.snapshot), // Title and Detail
                 SizedBox(
-                  height: 9,
+                  height: 9.h,
                 ),
               ],
             ),
@@ -96,14 +96,14 @@ class _PostwidgetState extends State<Postwidget> {
                   child: Icon(Icons.chat_bubble_outline, color: Colors.grey),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 5.w,
                 ),
                 Text("$comment_count"),
               ],
             ),
           ),
           SizedBox(
-            width: 25,
+            width: 25.w,
           ),
           GestureDetector(
             onTap: () {
@@ -117,8 +117,8 @@ class _PostwidgetState extends State<Postwidget> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 30.w,
+                  height: 30.h,
                   child: Icon(
                   widget.snapshot['like'].contains(user)
                   ?Icons.favorite
@@ -128,14 +128,14 @@ class _PostwidgetState extends State<Postwidget> {
                         : Colors.black),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 5.w,
                 ),
                 Text(widget.snapshot['like'].length.toString()),
               ],
             ),
           ),
           SizedBox(
-            width: 25,
+            width: 25.w,
           ),
           GestureDetector(
             onTap: () {
@@ -148,8 +148,8 @@ class _PostwidgetState extends State<Postwidget> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 30,
-                  height: 30,
+                  width: 30.w,
+                  height: 30.h,
                   child: Icon(
                   widget.snapshot['bookmark'].contains(user)
                   ?Icons.bookmark
@@ -159,7 +159,7 @@ class _PostwidgetState extends State<Postwidget> {
                         : Colors.black),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 5.w,
                 ),
                 Text(widget.snapshot['bookmark'].length.toString()),
               ],
@@ -179,7 +179,7 @@ class _PostwidgetState extends State<Postwidget> {
             alignment: Alignment.centerLeft,
             child: Text(
               snapshot['topic'],
-              style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -190,7 +190,7 @@ class _PostwidgetState extends State<Postwidget> {
             child: Text(
               snapshot['detail'],
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 15.sp,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -202,7 +202,7 @@ class _PostwidgetState extends State<Postwidget> {
 
   Padding Head(final snapshot) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       child: Row(
         children: [
           InkWell(
@@ -216,52 +216,52 @@ class _PostwidgetState extends State<Postwidget> {
             },
             child: ClipOval(
             child: SizedBox(
-              width: 75,
-              height: 75,
+              width: 75.w,
+              height: 75.h,
               child: CachedImage(snapshot['profileImage']),
             ),
           )),
           SizedBox(
-            width: 13,
+            width: 13.w,
           ),
           Column(
             children: [
               Text(
                 snapshot['username'],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 2,
+                height: 2.h,
               ),
               Text(
                 snapshot['time'] != null
                     ? formatDate(
                         snapshot['time'].toDate(), [yyyy, '-', mm, '-', dd])
                     : '',
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 10.sp),
               ),
             ],
           ),
           SizedBox(
-            width: 30,
+            width: 30.w,
           ),
           Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 67, 120, 255),
                       borderRadius: BorderRadius.circular(60),
-                      border: Border.all(color: Colors.transparent, width: 1)),
+                      border: Border.all(color: Colors.transparent, width: 1.w)),
                   child: Text(
                     '# ' + snapshot['category'],
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         color: Colors.white),
                   )),
               SizedBox(
-                height: 20,
+                height: 20.h,
               )
             ],
           )

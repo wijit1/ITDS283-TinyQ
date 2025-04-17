@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firebase_auth.dart';
 import 'package:tinyq/screen/signup_screen.dart';
 
@@ -25,14 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Head(),
           SizedBox(
-            height: 10,
+            height: 10.h,
           ),
           Center(
             child: Text(
               "Login",
               style: TextStyle(
                   color: Color(0xFF225AEB),
-                  fontSize: 50,
+                  fontSize: 50.sp,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -47,16 +48,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Padding Have() {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 20.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text("Dont have account ?",
             style: TextStyle(
-            fontSize: 15,
+            fontSize: 15.sp,
             color: Colors.grey,
           ),),
-            SizedBox(width: 15,),
+            SizedBox(width: 15.w,),
             GestureDetector(
             onTap: () {
               Navigator.push(
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.all(8.0),
                 child: Text("Sign up",
                 style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: const Color.fromARGB(255, 23, 99, 240),
                 fontWeight: FontWeight.bold
                             ),),
@@ -81,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Padding Login_Button() {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: InkWell(
             onTap: () async {
               await Authentication().Login(email: email.text , password: password.text);
@@ -108,30 +109,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Padding Textfield(TextEditingController controller, AssetImage icon, String type,FocusNode focusNode) {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25,vertical: 15),
+          padding: EdgeInsets.symmetric(horizontal: 25.w,vertical: 15.h),
           child: Container(
-            height: 55,
+            height: 55.h,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(20)),
             child: TextField(
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: TextStyle(fontSize: 18.sp, color: Colors.black),
               controller: controller,
               focusNode: focusNode,
               decoration: InputDecoration(
                   hintText: type,
                   hintStyle: TextStyle(color:  Color.fromARGB(255, 145, 144, 144)),
                   prefixIcon: Image(
-                    width: 70,
+                    width: 70.w,
                     image: icon),
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                      EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color:  Color.fromARGB(255, 199, 193, 193), width: 1)),
+                      borderSide: BorderSide(color:  Color.fromARGB(255, 199, 193, 193), width: 1.w)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide:
-                          BorderSide(color: Colors.pinkAccent, width: 2))),
+                          BorderSide(color: Colors.pinkAccent, width: 2.w))),
             ),
           ),
         );
@@ -142,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
       color: Color(0xFF225AEB),
       child: SizedBox(
         width: double.infinity,
-        height: 370,
+        height: 370.h,
         child: Column(
           children: [
             Padding(
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Welcome",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 65,
+                      fontSize: 65.sp,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -165,9 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text(
                   "Back",
                   style: TextStyle(
-                      height: 1.0,
+                      height: 1.0.h,
                       color: Colors.white,
-                      fontSize: 65,
+                      fontSize: 65.sp,
                       fontWeight: FontWeight.bold),
                 ),
               ),

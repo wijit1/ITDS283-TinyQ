@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinyq/data/firebase_service/firestor.dart';
 import 'package:tinyq/util/image_cached.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -78,13 +79,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 ClipOval(
                                   child: SizedBox(
-                                    width: 70,
-                                    height: 70,
+                                    width: 70.w,
+                                    height: 70.h,
                                     child: CachedImage(snapshot.data!.profile),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 35,
+                                  width: 35.w,
                                 ),
                                 Container(
                                   child: Column(
@@ -92,13 +93,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       Text(
                                         snapshot.data!.username,
                                         style: TextStyle(
-                                            fontSize: 19,
+                                            fontSize: 19.sp,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         snapshot.data!.major,
                                         style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 15.sp,
                                             color: const Color.fromARGB(
                                                 255, 172, 169, 169)),
                                       )
@@ -106,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 50,
+                                  width: 50.w,
                                 ),
                                 Visibility(
                                   visible: !isfollow,
@@ -185,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  width: 40,
+                                  width: 40.w,
                                 ),
                                 StreamBuilder<QuerySnapshot>(
                                   stream: FirebaseFirestore.instance
@@ -202,19 +203,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                                 SizedBox(
-                                  width: 50,
+                                  width: 50.w,
                                 ),
                                 Count(
                                     snapshot.data!.followers.length.toString(),
                                     "Followers"),
                                 SizedBox(
-                                  width: 50,
+                                  width: 50.w,
                                 ),
                                 Count(
                                     snapshot.data!.following.length.toString(),
                                     "Following"),
                                 SizedBox(
-                                  width: 20,
+                                  width: 20.w,
                                 ),
                               ],
                             ),
@@ -305,25 +306,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                             child: ClipOval(
                               child: SizedBox(
-                                width: 70,
-                                height: 70,
+                                width: 70.w,
+                                height: 70.h,
                                 child: CachedImage(data['profileImage']),
                               ),
                             )),
-                        SizedBox(width: 20),
+                        SizedBox(width: 20.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(data['topic'],
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.bold)),
                               Text(
                                 data['detail'],
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
-                                style: TextStyle(fontSize: 15),
+                                style: TextStyle(fontSize: 15.sp),
                               ),
                             ],
                           ),
@@ -376,11 +377,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 10,
+                          width: 10.w,
                         ),
                         Icon(Icons.library_books_outlined),
                         SizedBox(
-                          width: 20,
+                          width: 20.w,
                         ),
                         Expanded(
                           child: Column(
@@ -389,14 +390,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Text(
                                 data['topic'],
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                    fontSize: 20.sp, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 data['detail'],
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 15.sp,
                                 ),
                               ),
                             ],
@@ -459,25 +460,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                             child: ClipOval(
                               child: SizedBox(
-                                width: 70,
-                                height: 70,
+                                width: 70.w,
+                                height: 70.h,
                                 child: CachedImage(data['profileImage']),
                               ),
                             )),
-                        SizedBox(width: 20),
+                        SizedBox(width: 20.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(data['topic'],
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 20.sp,
                                       fontWeight: FontWeight.bold)),
                               Text(
                                 data['detail'],
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
-                                style: TextStyle(fontSize: 15),
+                                style: TextStyle(fontSize: 15.sp),
                               ),
                             ],
                           ),
@@ -501,12 +502,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           number,
           style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 18.sp, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         Text(
           name,
           style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.white),
         )
       ],
     );
