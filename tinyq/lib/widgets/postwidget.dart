@@ -155,7 +155,7 @@ class _PostwidgetState extends State<Postwidget> {
                   ?Icons.bookmark
                   :Icons.bookmark_border, 
                   color: widget.snapshot['bookmark'].contains(user)
-                        ? Colors.red
+                        ? Colors.amberAccent
                         : Colors.black),
                 ),
                 SizedBox(

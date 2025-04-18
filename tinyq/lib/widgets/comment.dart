@@ -25,10 +25,24 @@ class _CommentState extends State<Comment> {
   String user = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  int comment_count = 0;
+  void get_comment_count()async{
+     QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
+      .collection('posts')
+      .doc(widget.snapshot['postId'])
+      .collection('comments')
+      .get();
+      setState(() {
+        comment_count = comment_snapshot.docs.length;
+      });
+  }
+
+
   @override
   void initState() {
     super.initState();
     user = _auth.currentUser!.uid;
+    get_comment_count();
   }
 
   @override
@@ -47,7 +61,7 @@ class _CommentState extends State<Comment> {
                 padding: EdgeInsets.only(top: 20, left: 10),
                 child: Head(snapshot)),
             Detail(snapshot),
-            Action(),
+            Action(comment_count),
             Divider(color: Colors.grey.shade300, thickness: 2.0),
             Write_comment(),
             Divider(color: Colors.grey.shade300, thickness: 2.0),
@@ -261,7 +275,7 @@ class _CommentState extends State<Comment> {
     );
   }
 
-  Padding Action() {
+  Padding Action(int comment_count) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
@@ -279,7 +293,7 @@ class _CommentState extends State<Comment> {
                 SizedBox(
                   width: 5.w,
                 ),
-                Text("10"),
+                Text("$comment_count"),
               ],
             ),
           ),
@@ -330,21 +344,46 @@ class _CommentState extends State<Comment> {
           SizedBox(
             width: 25.w,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 30.w,
-                  height: 30.h,
-                  child: Icon(Icons.bookmark_border, color: Colors.grey),
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection(widget.type)
+                .doc(widget.snapshot['postId'])
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+
+              final post = snapshot.data!;
+              final bookmarks = List<String>.from(post['bookmark'] ?? []);
+
+              return GestureDetector(
+                onTap: () {
+                  Firebase_Firestor().bookmark(
+                    bookmark: bookmarks,
+                    type: widget.type,
+                    uid: user,
+                    postId: widget.snapshot['postId'],
+                  );
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 30.w,
+                      height: 30.h,
+                      child: Icon(
+                        bookmarks.contains(user)
+                            ? Icons.bookmark
+                            : Icons.bookmark_border,
+                        color: bookmarks.contains(user) ? Colors.amberAccent : Colors.black,
+                      ),
+                    ),
+                    SizedBox(width: 5.w),
+                    Text(bookmarks.length.toString()),
+                  ],
                 ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text("10"),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

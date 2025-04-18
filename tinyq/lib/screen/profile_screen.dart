@@ -109,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 50.w,
+                                  width: 30.w,
                                 ),
                                 Visibility(
                                   visible: !isfollow,
