@@ -79,53 +79,64 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  IconButton(onPressed: null, icon: Icon(Icons.image)),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  IconButton(onPressed: null, icon: Icon(Icons.copy)),
-                  SizedBox(
-                    width: 15.w,
-                  ),
-                  IconButton(onPressed: null, icon: Icon(Icons.emoji_emotions)),
-                  SizedBox(
-                    width: 100.w,
-                  ),
                   IconButton(
-                      onPressed: () async {
-                        setState(() {
-                          isloading = true;
-                        });
-                        await Firebase_Firestor().CreatePost(
-                            topic: topic.text,
-                            category: category.text,
-                            detail: detail.text);
-
-                        setState(() {
-                          isloading = false;
-                          topic.clear();
-                          category.clear();
-                          detail.clear();
-                        });
-
+                    onPressed: () async {
+                      if (topic.text.isEmpty ||
+                          category.text.isEmpty ||
+                          detail.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Row(
                               children: [
-                                Icon(Icons.check_circle, color: Colors.white),
+                                Icon(Icons.warning_amber, color: Colors.white),
                                 SizedBox(width: 10.w),
-                                Text('Create Post Success!!'),
+                                Text('Please fill in all fields!'),
                               ],
                             ),
-                            backgroundColor: Colors.green,
+                            backgroundColor: Colors.redAccent,
                             behavior: SnackBarBehavior.floating,
-                            duration: Duration(seconds: 5),
+                            duration: Duration(seconds: 3),
                           ),
                         );
-                      },
-                      icon: Image(
-                          image: AssetImage(
-                              'assets/images/addpost_page_send.png'))),
+                        return;
+                      }
+
+                      setState(() {
+                        isloading = true;
+                      });
+
+                      await Firebase_Firestor().CreatePost(
+                        topic: topic.text,
+                        category: category.text,
+                        detail: detail.text,
+                      );
+
+                      setState(() {
+                        isloading = false;
+                        topic.clear();
+                        category.clear();
+                        detail.clear();
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Row(
+                            children: [
+                              Icon(Icons.check_circle, color: Colors.white),
+                              SizedBox(width: 10.w),
+                              Text('Create Post Success!!'),
+                            ],
+                          ),
+                          backgroundColor: Colors.green,
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
+                    },
+                    icon: Image(
+                      image: AssetImage('assets/images/addpost_page_send.png'),
+                    ),
+                  ),
                 ],
               ),
             )
