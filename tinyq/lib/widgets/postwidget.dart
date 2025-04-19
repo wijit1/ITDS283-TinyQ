@@ -30,7 +30,7 @@ class _PostwidgetState extends State<Postwidget> {
       .doc(widget.snapshot['postId'])
       .collection('comments')
       .get();
-      
+
       if (mounted){
       setState(() {
         comment_count = comment_snapshot.docs.length;
@@ -83,7 +83,7 @@ class _PostwidgetState extends State<Postwidget> {
 
   Padding Action(int comment_count) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -177,7 +177,7 @@ class _PostwidgetState extends State<Postwidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -189,7 +189,7 @@ class _PostwidgetState extends State<Postwidget> {
 
         if (!widget.search_bool)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Text(
               snapshot['detail'],
               style: TextStyle(
