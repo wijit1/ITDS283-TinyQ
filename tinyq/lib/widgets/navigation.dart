@@ -139,21 +139,6 @@ class _Navigation_ScreenState extends State<Navigation_Screen> {
                   ),
                   label: 'Search'),
               BottomNavigationBarItem(
-                activeIcon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.search, size: 30, color: Color(0xFF225AEB)),
-                      SizedBox(height: 4), // ระยะห่างระหว่าง icon กับ เส้น
-                      Container(
-                        height: 3,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF225AEB), // สีของเส้น
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                    ],
-                  ),
                   icon: Image.asset(
                     'assets/images/nav_addpost.png',
                     width: 50,
