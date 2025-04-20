@@ -74,31 +74,48 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 children: [
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return ProfileScreen(user['uid']);
-                                      }));
-                                    },
-                                    child: CircleAvatar(
-                                        radius: 40,
-                                        backgroundColor: const Color.fromARGB(255, 64, 47, 218),
-                                        child: ClipOval(
-                                          child: SizedBox(
-                                            width: 60.w,
-                                            height: 60.h,
-                                            child: CachedImage(user['profile']),
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return ProfileScreen(user['uid']);
+                                        }));
+                                      },
+                                      child: Container(
+                                        width: 90,
+                                        height: 90,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              const Color.fromARGB(255, 188, 30, 255),
+                                              const Color.fromARGB(255, 27, 111, 255),
+                                              const Color.fromARGB(255, 34, 185, 255),
+                                              Colors.lightBlueAccent,
+                                              
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
                                           ),
-                                        )),
-                                  ),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(5),
+                                            child: ClipOval(
+                                              child:
+                                                  CachedImage(user['profile']),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                   SizedBox(
-                                    height: 10.w,
+                                    height: 12.w,
                                   ),
                                   Text(
-                                    
                                     user['username'],
                                     style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                        TextStyle(
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),

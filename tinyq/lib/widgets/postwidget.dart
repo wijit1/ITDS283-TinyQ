@@ -190,13 +190,16 @@ class _PostwidgetState extends State<Postwidget> {
         if (!widget.search_bool)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Text(
-              snapshot['detail'],
-              style: TextStyle(
-                fontSize: 15.sp,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                snapshot['detail'],
+                style: TextStyle(
+                  fontSize: 15.sp,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
       ],
