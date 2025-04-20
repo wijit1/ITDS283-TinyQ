@@ -218,6 +218,7 @@ class _SignupScreenState extends State<SignupScreen> {
           SizedBox(width: 15.w),
           GestureDetector(
             onTap: () {
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LoginScreen()),

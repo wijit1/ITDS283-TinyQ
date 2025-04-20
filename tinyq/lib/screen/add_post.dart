@@ -51,7 +51,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
     return Padding(
       padding: EdgeInsets.all(25.0),
       child: Container(
-        height: 245.h,
+        height: 200.h,
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -79,6 +79,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  SizedBox(width: 240.w,),
                   IconButton(
                     onPressed: () async {
                       if (topic.text.isEmpty ||
