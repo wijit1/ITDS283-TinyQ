@@ -51,7 +51,6 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
     return Padding(
       padding: EdgeInsets.all(25.0),
       child: Container(
-        height: 200.h,
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -74,7 +73,7 @@ class _AddPost_ScreenState extends State<AddPost_Screen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 13),
+              padding: EdgeInsets.symmetric(vertical: 13.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
