@@ -22,8 +22,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final password = TextEditingController();
   FocusNode password_F = FocusNode();
 
-  final passwordConfirme = TextEditingController();
-  FocusNode passwordConfirme_F = FocusNode();
+  final passwordConfirm = TextEditingController(); // เปลี่ยนชื่อให้ถูก
+  FocusNode passwordConfirm_F = FocusNode(); // เปลี่ยนชื่อให้ถูก
 
   final username = TextEditingController();
   FocusNode username_F = FocusNode();
@@ -81,9 +81,9 @@ class _SignupScreenState extends State<SignupScreen> {
           Textfield(password, AssetImage("assets/images/lock_icon.png"),
               "Password", password_F,
               obscureText: true),
-          Textfield(passwordConfirme, AssetImage("assets/images/lock_icon.png"),
-              "Password Confirm", passwordConfirme_F,
-              obscureText: true),
+          Textfield(passwordConfirm, AssetImage("assets/images/lock_icon.png"),
+              "Password Confirm", passwordConfirm_F,
+              obscureText: true), // แก้ตรงนี้
           Signup_Button(),
           Have(),
         ],
@@ -97,33 +97,35 @@ class _SignupScreenState extends State<SignupScreen> {
       child: InkWell(
         onTap: () async {
           if (email.text.isEmpty ||
-            password.text.isEmpty ||
-            passwordConfirme.text.isEmpty ||
-            username.text.isEmpty ||
-            major.text.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("กรุณากรอกข้อมูลให้ครบถ้วน"),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return; 
-        }
+              password.text.isEmpty ||
+              passwordConfirm.text.isEmpty || // แก้ตรงนี้
+              username.text.isEmpty ||
+              major.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("กรุณากรอกข้อมูลให้ครบถ้วน"),
+                backgroundColor: Colors.red,
+              ),
+            );
+            return;
+          }
 
-        if(password.text != passwordConfirme){
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Password ไม่ตรงกับ  PasswordConfirm"),
-              backgroundColor: Colors.red,
-            ),
-          );
-          return;
-        }
+          if (password.text.trim() != passwordConfirm.text.trim()) {
+            // เพิ่ม .trim()
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Password ไม่ตรงกับ Password Confirm"),
+                backgroundColor: Colors.red,
+              ),
+            );
+            return;
+          }
+
           try {
             await Authentication().Signup(
               email: email.text,
               password: password.text,
-              passwordConfirme: passwordConfirme.text,
+              passwordConfirme: passwordConfirm.text, // ส่งชื่อเดิมไปให้ Firebase
               username: username.text,
               major: major.text,
               profile: _imageFile ?? File(''),
@@ -264,7 +266,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  
   Padding Textfield(
     TextEditingController controller,
     AssetImage icon,
@@ -285,7 +286,7 @@ class _SignupScreenState extends State<SignupScreen> {
           style: TextStyle(fontSize: 18.sp, color: Colors.black),
           controller: controller,
           focusNode: focusNode,
-          obscureText: obscureText, // << ซ่อนรหัสผ่านตรงนี้
+          obscureText: obscureText,
           decoration: InputDecoration(
             hintText: type,
             hintStyle: TextStyle(
