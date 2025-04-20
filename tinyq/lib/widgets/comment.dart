@@ -124,12 +124,26 @@ class _CommentState extends State<Comment> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipOval(
-                child: SizedBox(
-                  height: 60.h,
-                  width: 60.w,
-                  child: CachedImage(
-                    csnapshot['profileImage'],
+            Container(
+                width: 90,
+                height: 90,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 188, 30, 255),
+                      const Color.fromARGB(255, 27, 111, 255),
+                      const Color.fromARGB(255, 34, 185, 255),
+                      Colors.lightBlueAccent,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: ClipOval(
+                    child: CachedImage(csnapshot['profileImage']),
                   ),
                 ),
               ),
@@ -426,11 +440,27 @@ class _CommentState extends State<Comment> {
       child: Row(
         children: [
           InkWell(
+              child: Container(
+            width: 90,
+            height: 90,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [
+                  const Color.fromARGB(255, 188, 30, 255),
+                  const Color.fromARGB(255, 27, 111, 255),
+                  const Color.fromARGB(255, 34, 185, 255),
+                  Colors.lightBlueAccent,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(5),
               child: ClipOval(
-            child: SizedBox(
-              width: 75.w,
-              height: 75.h,
-              child: CachedImage(snapshot['profileImage']),
+                child: CachedImage(snapshot['profileImage']),
+              ),
             ),
           )),
           SizedBox(
@@ -461,7 +491,7 @@ class _CommentState extends State<Comment> {
             children: [
               Container(
                   constraints: BoxConstraints(
-                    maxWidth: 100.w, 
+                    maxWidth: 100.w,
                   ),
                   padding:
                       EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),

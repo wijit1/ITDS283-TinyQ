@@ -90,6 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 35.w,
                                 ),
                                 Container(
+                                  width: 100.w,
                                   child: Column(
                                     children: [
                                       Text(

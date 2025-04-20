@@ -10,28 +10,28 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Postwidget extends StatefulWidget {
-  final search_bool; 
+  final search_bool;
   final snapshot;
-  const Postwidget(this.snapshot,{this.search_bool = false,super.key});
+  const Postwidget(this.snapshot, {this.search_bool = false, super.key});
 
   @override
   State<Postwidget> createState() => _PostwidgetState();
 }
 
 class _PostwidgetState extends State<Postwidget> {
-  String user = ''; 
+  String user = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   int comment_count = 0;
 
-  void get_comment_count()async{
-     QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
-      .collection('posts')
-      .doc(widget.snapshot['postId'])
-      .collection('comments')
-      .get();
+  void get_comment_count() async {
+    QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.snapshot['postId'])
+        .collection('comments')
+        .get();
 
-      if (mounted){
+    if (mounted) {
       setState(() {
         comment_count = comment_snapshot.docs.length;
       });
@@ -39,23 +39,27 @@ class _PostwidgetState extends State<Postwidget> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    user = _auth.currentUser!.uid; 
+    user = _auth.currentUser!.uid;
     get_comment_count();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Comment('posts', widget.snapshot)));
       },
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
-            border:
-                Border.all(color: Color.fromARGB(255, 219, 225, 240), width: 2)),
+            border: Border.all(
+                color: Color.fromARGB(255, 219, 225, 240), width: 2)),
         child: Column(
           children: [
             Column(
@@ -74,7 +78,7 @@ class _PostwidgetState extends State<Postwidget> {
               thickness: 1, // ความหนา
               color: const Color.fromARGB(255, 207, 206, 206), // สีเส้น
             ),
-            Action( comment_count)
+            Action(comment_count)
           ],
         ),
       ),
@@ -89,7 +93,10 @@ class _PostwidgetState extends State<Postwidget> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context)=> Comment('posts',widget.snapshot)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Comment('posts', widget.snapshot)));
             },
             child: Row(
               children: [
@@ -110,12 +117,11 @@ class _PostwidgetState extends State<Postwidget> {
           ),
           GestureDetector(
             onTap: () {
-
               Firebase_Firestor().like(
-                like: widget.snapshot['like'], 
-                type: 'posts', 
-                uid: user, 
-                postId: widget.snapshot['postId']);
+                  like: widget.snapshot['like'],
+                  type: 'posts',
+                  uid: user,
+                  postId: widget.snapshot['postId']);
             },
             child: Row(
               children: [
@@ -123,12 +129,12 @@ class _PostwidgetState extends State<Postwidget> {
                   width: 30.w,
                   height: 30.h,
                   child: Icon(
-                  widget.snapshot['like'].contains(user)
-                  ?Icons.favorite
-                  :Icons.favorite_border, 
-                  color: widget.snapshot['like'].contains(user)
-                        ? Colors.red
-                        : Colors.black),
+                      widget.snapshot['like'].contains(user)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: widget.snapshot['like'].contains(user)
+                          ? Colors.red
+                          : Colors.black),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -143,10 +149,10 @@ class _PostwidgetState extends State<Postwidget> {
           GestureDetector(
             onTap: () {
               Firebase_Firestor().bookmark(
-                bookmark: widget.snapshot['bookmark'], 
-                type: 'posts', 
-                uid: user, 
-                postId: widget.snapshot['postId']);
+                  bookmark: widget.snapshot['bookmark'],
+                  type: 'posts',
+                  uid: user,
+                  postId: widget.snapshot['postId']);
             },
             child: Row(
               children: [
@@ -154,12 +160,12 @@ class _PostwidgetState extends State<Postwidget> {
                   width: 30.w,
                   height: 30.h,
                   child: Icon(
-                  widget.snapshot['bookmark'].contains(user)
-                  ?Icons.bookmark
-                  :Icons.bookmark_border, 
-                  color: widget.snapshot['bookmark'].contains(user)
-                        ? Colors.amberAccent
-                        : Colors.black),
+                      widget.snapshot['bookmark'].contains(user)
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
+                      color: widget.snapshot['bookmark'].contains(user)
+                          ? Colors.amberAccent
+                          : Colors.black),
                 ),
                 SizedBox(
                   width: 5.w,
@@ -186,7 +192,6 @@ class _PostwidgetState extends State<Postwidget> {
             ),
           ),
         ),
-
         if (!widget.search_bool)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -212,21 +217,35 @@ class _PostwidgetState extends State<Postwidget> {
       child: Row(
         children: [
           InkWell(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context){
-                    return ProfileScreen(snapshot['uid']);
-                  })
-              );
-            },
-            child: ClipOval(
-            child: SizedBox(
-              width: 75.w,
-              height: 75.h,
-              child: CachedImage(snapshot['profileImage']),
-            ),
-          )),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return ProfileScreen(snapshot['uid']);
+                }));
+              },
+              child: Container(
+                width: 90,
+                height: 90,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 188, 30, 255),
+                      const Color.fromARGB(255, 27, 111, 255),
+                      const Color.fromARGB(255, 34, 185, 255),
+                      Colors.lightBlueAccent,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: ClipOval(
+                    child: CachedImage(snapshot['profileImage']),
+                  ),
+                ),
+              )),
           SizedBox(
             width: 13.w,
           ),
@@ -237,7 +256,8 @@ class _PostwidgetState extends State<Postwidget> {
                 Text(
                   overflow: TextOverflow.ellipsis,
                   snapshot['username'],
-                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 2.h,
@@ -259,11 +279,13 @@ class _PostwidgetState extends State<Postwidget> {
             children: [
               Container(
                   width: 100,
-                  padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 67, 120, 255),
                       borderRadius: BorderRadius.circular(60),
-                      border: Border.all(color: Colors.transparent, width: 1.w)),
+                      border:
+                          Border.all(color: Colors.transparent, width: 1.w)),
                   child: Text(
                     '# ' + snapshot['category'],
                     overflow: TextOverflow.ellipsis,
