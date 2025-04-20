@@ -82,12 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     child: CircleAvatar(
                                         radius: 40,
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 136, 184, 255),
+                                        backgroundColor: const Color.fromARGB(255, 64, 47, 218),
                                         child: ClipOval(
                                           child: SizedBox(
-                                            width: 75.w,
-                                            height: 75.h,
+                                            width: 60.w,
+                                            height: 60.h,
                                             child: CachedImage(user['profile']),
                                           ),
                                         )),
@@ -96,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 10.w,
                                   ),
                                   Text(
+                                    
                                     user['username'],
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),

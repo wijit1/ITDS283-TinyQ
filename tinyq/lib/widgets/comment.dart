@@ -58,7 +58,7 @@ class _CommentState extends State<Comment> {
         child: Column(
           children: [
             Padding(
-                padding: EdgeInsets.only(top: 20, left: 10),
+                padding: EdgeInsets.only(top: 20.h, left: 10.w),
                 child: Head(snapshot)),
             Detail(snapshot),
             Action(comment_count),
@@ -173,7 +173,7 @@ class _CommentState extends State<Comment> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 30, top: 10),
+          padding: EdgeInsets.only(left: 30.w, top: 10.h),
           alignment: Alignment.topLeft,
           child: Text(
             "comment here",
@@ -235,7 +235,7 @@ class _CommentState extends State<Comment> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(right: 10),
+                      padding: EdgeInsets.only(right: 10.w),
                       alignment: Alignment.bottomRight,
                       child: GestureDetector(
                         onTap: () {
@@ -396,7 +396,7 @@ class _CommentState extends State<Comment> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -406,7 +406,7 @@ class _CommentState extends State<Comment> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Text(
               snapshot['detail'],
               style: TextStyle(

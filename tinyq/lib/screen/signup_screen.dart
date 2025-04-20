@@ -96,6 +96,29 @@ class _SignupScreenState extends State<SignupScreen> {
       padding: EdgeInsets.only(top: 10, bottom: 0),
       child: InkWell(
         onTap: () async {
+          if (email.text.isEmpty ||
+            password.text.isEmpty ||
+            passwordConfirme.text.isEmpty ||
+            username.text.isEmpty ||
+            major.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("กรุณากรอกข้อมูลให้ครบถ้วน"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return; 
+        }
+
+        if(password.text != passwordConfirme){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Password ไม่ตรงกับ  PasswordConfirm"),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
           try {
             await Authentication().Signup(
               email: email.text,
@@ -241,7 +264,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  // ✅ แก้ตรงนี้ให้รองรับ obscureText
+  
   Padding Textfield(
     TextEditingController controller,
     AssetImage icon,

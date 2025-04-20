@@ -15,11 +15,9 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   final List<String> categories = [
     'business',
-    'entertainment',
     'general',
     'health',
     'science',
-    'sports',
     'technology',
   ];
 
