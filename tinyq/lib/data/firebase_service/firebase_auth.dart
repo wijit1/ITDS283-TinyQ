@@ -52,7 +52,7 @@ class Authentication {
             username: username,
             major: major,
             profile: URL == ''
-                ? 'https://firebasestorage.googleapis.com/v0/b/tinyq-fbf70.firebasestorage.app/o/Profile%2Fuser_Icon.png?alt=media&token=ee2a9030-0a74-454e-88b2-6a279a78d02b'
+                ? 'https://firebasestorage.googleapis.com/v0/b/tinyq-fbf70.firebasestorage.app/o/Profile%2Fwhit_user.png?alt=media&token=025b3ba4-3770-4481-9494-fc94ce0db520'
                 : URL,
           );
         } else {
