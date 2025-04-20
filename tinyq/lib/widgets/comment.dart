@@ -26,17 +26,16 @@ class _CommentState extends State<Comment> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   int comment_count = 0;
-  void get_comment_count()async{
-     QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
-      .collection('posts')
-      .doc(widget.snapshot['postId'])
-      .collection('comments')
-      .get();
-      setState(() {
-        comment_count = comment_snapshot.docs.length;
-      });
+  void get_comment_count() async {
+    QuerySnapshot comment_snapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.snapshot['postId'])
+        .collection('comments')
+        .get();
+    setState(() {
+      comment_count = comment_snapshot.docs.length;
+    });
   }
-
 
   @override
   void initState() {
@@ -250,9 +249,9 @@ class _CommentState extends State<Comment> {
                             );
 
                             Firebase_Firestor().CreateNotification(
-                              title: comment.text, 
-                              postId: widget.snapshot['postId'], 
-                              ownerId: widget.snapshot['uid'], 
+                              title: comment.text,
+                              postId: widget.snapshot['postId'],
+                              ownerId: widget.snapshot['uid'],
                             );
                           }
                           setState(() {
@@ -375,7 +374,9 @@ class _CommentState extends State<Comment> {
                         bookmarks.contains(user)
                             ? Icons.bookmark
                             : Icons.bookmark_border,
-                        color: bookmarks.contains(user) ? Colors.amberAccent : Colors.black,
+                        color: bookmarks.contains(user)
+                            ? Colors.amberAccent
+                            : Colors.black,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -454,16 +455,21 @@ class _CommentState extends State<Comment> {
             ],
           ),
           SizedBox(
-            width: 30.w,
+            width: 13.w,
           ),
           Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
+                  constraints: BoxConstraints(
+                    maxWidth: 100.w, 
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 67, 120, 255),
                       borderRadius: BorderRadius.circular(60),
-                      border: Border.all(color: Colors.transparent, width: 1.w)),
+                      border:
+                          Border.all(color: Colors.transparent, width: 1.w)),
                   child: Text(
                     '# ' + snapshot['category'],
                     style: TextStyle(

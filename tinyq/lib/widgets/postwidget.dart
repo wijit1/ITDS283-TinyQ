@@ -230,23 +230,27 @@ class _PostwidgetState extends State<Postwidget> {
           SizedBox(
             width: 13.w,
           ),
-          Column(
-            children: [
-              Text(
-                snapshot['username'],
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Text(
-                snapshot['time'] != null
-                    ? formatDate(
-                        snapshot['time'].toDate(), [yyyy, '-', mm, '-', dd])
-                    : '',
-                style: TextStyle(fontSize: 10.sp),
-              ),
-            ],
+          Container(
+            width: 100,
+            child: Column(
+              children: [
+                Text(
+                  overflow: TextOverflow.ellipsis,
+                  snapshot['username'],
+                  style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Text(
+                  snapshot['time'] != null
+                      ? formatDate(
+                          snapshot['time'].toDate(), [yyyy, '-', mm, '-', dd])
+                      : '',
+                  style: TextStyle(fontSize: 10.sp),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             width: 30.w,
@@ -254,6 +258,7 @@ class _PostwidgetState extends State<Postwidget> {
           Column(
             children: [
               Container(
+                  width: 100,
                   padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 5.h),
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 67, 120, 255),
@@ -261,6 +266,7 @@ class _PostwidgetState extends State<Postwidget> {
                       border: Border.all(color: Colors.transparent, width: 1.w)),
                   child: Text(
                     '# ' + snapshot['category'],
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.sp,
