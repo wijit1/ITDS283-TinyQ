@@ -98,15 +98,35 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return ProfileScreen(data['triggeredByUserId']);
+                                          return ProfileScreen(
+                                              data['triggeredByUserId']);
                                         }));
                                       },
-                                      child: ClipOval(
-                                        child: SizedBox(
-                                          width: 70.w,
-                                          height: 70.h,
-                                          child: CachedImage(
-                                              data['triggeredByUserAvatar']),
+                                      child: Container(
+                                        width: 90,
+                                        height: 90,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              const Color.fromARGB(
+                                                  255, 188, 30, 255),
+                                              const Color.fromARGB(
+                                                  255, 27, 111, 255),
+                                              const Color.fromARGB(
+                                                  255, 34, 185, 255),
+                                              Colors.lightBlueAccent,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: ClipOval(
+                                            child: CachedImage(
+                                                data['triggeredByUserAvatar']),
+                                          ),
                                         ),
                                       ),
                                     ),

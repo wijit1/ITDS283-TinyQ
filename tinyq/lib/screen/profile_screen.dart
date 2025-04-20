@@ -288,6 +288,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final bookmarkedPosts = snapshot.data!.docs;
 
         return ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: bookmarkedPosts.length,
           itemBuilder: (context, index) {
             final data = bookmarkedPosts[index].data() as Map<String, dynamic>;
@@ -368,6 +370,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final posts = snapshot.data!.docs;
 
         return ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: posts.length,
           itemBuilder: (context, index) {
             final data = posts[index].data() as Map<String, dynamic>;
@@ -443,6 +447,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final likedPosts = snapshot.data!.docs;
 
         return ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: likedPosts.length,
           itemBuilder: (context, index) {
             final data = likedPosts[index].data() as Map<String, dynamic>;
